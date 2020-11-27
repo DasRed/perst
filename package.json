@@ -1,0 +1,160 @@
+{
+    "name": "perst",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "type": "module",
+    "engines": {
+        "node": ">=15.0.0",
+        "npm": ">=7.0.2"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "commit": "git-cz",
+        "publish:check": "semantic-release --branch master --no-ci --dry-run",
+        "prepublishOnly-X": "npm run build && npm run semantic-release",
+        "semantic-release": "semantic-release -- --no-ci",
+        "test": "jest --coverage",
+        "coveralls": "cat ./coverage/lcov.info | coveralls"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DasRed/perst.git"
+    },
+    "author": "DasRed",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/DasRed/perst/issues"
+    },
+    "homepage": "https://github.com/DasRed/perst#readme",
+    "dependencies": {
+        "chalk": "^2.4.2",
+        "cosmiconfig": "^7.0.0",
+        "fastest-validator": "^1.9.0",
+        "loader.io.api": "^1.1.2",
+        "pretty-ms": "^7.0.1",
+        "yaml": "^1.10.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.12.3",
+        "@babel/preset-env": "^7.12.1",
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
+        "@semantic-release/changelog": "^5.0.1",
+        "@semantic-release/git": "^9.0.0",
+        "babel-jest": "^26.6.3",
+        "commitizen": "^4.2.2",
+        "core-js": "^3.7.0",
+        "coveralls": "^3.1.0",
+        "cz-conventional-changelog": "^3.3.0",
+        "husky": "^4.3.0",
+        "jest": "^26.6.3",
+        "rollup": "^2.33.3",
+        "semantic-release": "^17.2.4"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "files": [
+        "dist/*",
+        "src/*",
+        "!src/**/[__tests__]*"
+    ],
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ],
+        "rules": {
+            "header-max-length": [
+                2,
+                "always",
+                200
+            ],
+            "scope-case": [
+                1,
+                "always",
+                [
+                    "upper-case",
+                    "lower-case",
+                    "pascal-case",
+                    "start-case"
+                ]
+            ],
+            "subject-case": [
+                1,
+                "always",
+                [
+                    "sentence-case",
+                    "lower-case",
+                    "start-case"
+                ]
+            ]
+        }
+    },
+    "release": {
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/github"
+        ],
+        "prepare": [
+            "@semantic-release/changelog",
+            "@semantic-release/npm",
+            {
+                "path": "@semantic-release/git",
+                "assets": [
+                    "package.json",
+                    "package-lock.json",
+                    "CHANGELOG.md"
+                ]
+            }
+        ]
+    },
+    "jest": {
+        "roots": [
+            "src/"
+        ],
+        "transform": {
+            "^.+\\.js$": "babel-jest"
+        },
+        "moduleFileExtensions": [
+            "js"
+        ],
+        "testRegex": "\\.test\\.js$",
+        "testPathIgnorePatterns": [
+            "node_modules"
+        ],
+        "bail": false,
+        "verbose": true,
+        "transformIgnorePatterns": [
+            "node_modules"
+        ],
+        "setupFilesAfterEnv": [
+            "<rootDir>/src/__tests__/jest.setup.js"
+        ],
+        "coverageDirectory": "coverage",
+        "collectCoverageFrom": [
+            "src/**/*.js",
+            "!**/__tests__/**",
+            "!**/__mocks__/**"
+        ]
+    },
+    "babel": {
+        "presets": [
+            [
+                "@babel/preset-env",
+                {
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ]
+    }
+}

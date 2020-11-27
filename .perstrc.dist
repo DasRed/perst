@@ -1,0 +1,52 @@
+# supports env variables
+
+api:
+    token: bb74abe565ec005944ffcbfa846431e1 # required
+#    server: https://api.loader.io # is default
+#    version: v2 # is default
+
+app:
+    domain: https://www.example.com  # required
+
+tasks:
+    tasks1:
+        name: $CI_ENV-test1 # required
+        type: Clients per test # is default --> test_type
+#        type: Clients per second
+#        type: Maintain client load
+        duration: 60 # in seconds
+        clientsStart: 1 # is default, only for "Maintain client load" test type --> initial
+        clients: 25 # --> total
+        timeout: 10000 # is default, in milliseconds
+        notes: "" # is default
+        tags: # default is not exists --> tag_names
+            - tag 1
+            - tag 2
+        threshold:
+            avgResponseTime: 500 # is default, in milliseconds
+            avgErrorRate: 50 # is default, in percent
+        request: # required
+            path: /nuff/narf # required --> url
+            type: GET # is default --> request_type
+#            type: POST
+#            type: PUT
+#            type: PATCH
+#            type: DELETE
+            payloadFile: https://www.example.de/file # default is null --> payload_file_url
+            headers: # default are following values
+                accept-encoding: gzip
+            parameters: # default is null --> request_params
+                parameter1: value of parameter 1
+            authentication: # default is null
+                type: basic # is default
+                login: login # required if authentication is defined
+                password: password # required if authentication is defined
+            variables:  # default is null
+                -
+                    name: variable 1 name # required
+                    property: variable 1 property # required
+                    source: variable 1 source # required
+                -
+                    name: variable 2 name # required
+                    property: variable 2 property # required
+                    source: variable 2 source # required
