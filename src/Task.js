@@ -1,4 +1,4 @@
-import Test from 'loader.io.api/src/Tests/Test.js';
+import Test from 'loader.io.api/dist/Tests/Test.js';
 import * as logger from './logger.js';
 import chalk from 'chalk';
 import ResultFinder from './ResultFinder.js';

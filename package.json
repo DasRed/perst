@@ -58,8 +58,7 @@
     },
     "files": [
         "dist/*",
-        "src/*",
-        "!src/**/[__tests__]*"
+        "src/*"
     ],
     "husky": {
         "hooks": {
@@ -156,5 +155,32 @@
                 }
             ]
         ]
-    }
+    },
+    "keywords": [
+        "perst",
+        "performance test",
+        "load test",
+        "last test",
+        "stress test",
+        "performancetest",
+        "loadtest",
+        "lasttest",
+        "stresstest",
+        "loader.io",
+        "loaderio",
+        "loader-io",
+        "loader IO",
+        "node.loader.io",
+        "node-loaderio",
+        "node-loader-io",
+        "node loader IO",
+        "loader.io.api",
+        "loaderioAPI",
+        "loader-io-API",
+        "loader IO API",
+        "node.loader.io.API",
+        "node-loaderioAPI",
+        "node-loader-io-API",
+        "node loader IO API"
+    ]
 }
