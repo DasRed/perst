@@ -1,4 +1,4 @@
-import {cosmiconfigSync} from 'cosmiconfig';
+import {cosmiconfig} from 'cosmiconfig';
 import yamlLoader from './yamlLoader.js';
 import schema from './schema.js';
 import Validator from 'fastest-validator';
@@ -18,7 +18,8 @@ import Validator from 'fastest-validator';
 
 // using a cosmiconfigSync, because jest does not allow top level await for coverage, which is needed for explorer.search
 // load the config
-const explorer = cosmiconfigSync('perst', {
+const explorer = cosmiconfig('perst', {
+    cache: false,
     loaders: {
         '.yaml': yamlLoader,
         '.yml':  yamlLoader,
@@ -26,7 +27,7 @@ const explorer = cosmiconfigSync('perst', {
     }
 });
 
-const result = explorer.search();
+const result = await explorer.search();
 if (result === null) {
     throw new Error('no config found');
 }

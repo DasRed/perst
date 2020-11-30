@@ -1,3 +1,5 @@
+import stripAnsi from 'strip-ansi';
+
 let lastLine     = '';
 export const log = (message, writeLine = true) => {
     message  = message + (writeLine ? '\n' : '');
@@ -6,8 +8,14 @@ export const log = (message, writeLine = true) => {
 };
 
 export function removeLastLine() {
-    for (let i = 0; i < lastLine.length; i++) {
+    const line = stripAnsi(lastLine);
+    for (let i = 0; i < line.length; i++) {
         process.stdout.write('\u0008');
     }
     lastLine = '';
 }
+
+export default {
+    removeLastLine,
+    log
+};

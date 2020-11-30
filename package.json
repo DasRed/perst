@@ -2,6 +2,7 @@
     "name": "perst",
     "version": "0.1.2",
     "main": "dist/index.js",
+    "type": "module",
     "bin": {
         "perst": "dist/index.js"
     },
@@ -18,7 +19,8 @@
         "publish:check": "semantic-release --branch master --no-ci --dry-run",
         "prepublishOnly-X": "npm run build && npm run semantic-release",
         "semantic-release": "semantic-release -- --no-ci",
-        "test": "jest --coverage",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
         "coveralls": "cat ./coverage/lcov.info | coveralls"
     },
     "repository": {
@@ -32,12 +34,15 @@
     },
     "homepage": "https://github.com/DasRed/perst#readme",
     "dependencies": {
-        "chalk": "^2.4.2",
+        "chalk": "^4.1.0",
         "cosmiconfig": "^7.0.0",
         "fastest-validator": "^1.9.0",
         "loader.io.api": "^1.3.10",
         "pretty-ms": "^7.0.1",
-        "yaml": "^1.10.0"
+        "random": "^2.2.0",
+        "strip-ansi": "^5.2.0",
+        "yaml": "^1.10.0",
+        "yargs-parser": "^18.1.3"
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",

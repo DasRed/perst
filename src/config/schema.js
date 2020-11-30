@@ -1,10 +1,17 @@
 import unknownPropertyObject from './unknownPropertyObject.js';
-import {Url, Test} from 'loader.io.api';
+import Test from 'loader.io.api/dist/Tests/Test.js';
+import Url from 'loader.io.api/dist/Tests/Url.js';
+import cli from '../cli.js';
 
 /** @var {ValidationSchema} */
 export default {
     $$strict: 'remove',
-    api:      {
+    dryRun: {
+        type:     'boolean',
+        required: true,
+        default:  cli.dryRun,
+    },
+    api:    {
         type:   'object',
         strict: 'remove',
         props:  {
@@ -26,7 +33,7 @@ export default {
             }
         }
     },
-    app:      {
+    app:    {
         type:   'object',
         strict: 'remove',
         props:  {
@@ -36,7 +43,7 @@ export default {
             }
         }
     },
-    tasks:    {
+    tasks:  {
         type:     'custom',
         check:    unknownPropertyObject,
         minProps: 1,

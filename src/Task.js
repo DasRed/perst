@@ -1,6 +1,7 @@
-import {Test} from 'loader.io.api';
-import * as logger from './logger.js';
 import chalk from 'chalk';
+import random from 'random';
+import Test from 'loader.io.api/dist/Tests/Test.js';
+import logger from './logger.js';
 import ResultFinder from './ResultFinder.js';
 import prettyMilliseconds from 'pretty-ms';
 
@@ -27,12 +28,20 @@ export default class Task {
      * @param {string} name
      * @param {Object} config
      * @param {Object} configApp
+     * @param {Boolean} [dryRun]
      */
-    constructor({loaderIO, name, config, configApp}) {
+    constructor({
+                    loaderIO,
+                    name,
+                    config,
+                    configApp,
+                    dryRun = false,
+                }) {
         this.loaderIO  = loaderIO;
         this.name      = name;
         this.config    = config;
         this.configApp = configApp;
+        this.dryRun    = dryRun;
 
         this.status = Task.STATUS.PENDING;
         this.result = Task.RESULT.PENDING;
@@ -47,17 +56,15 @@ export default class Task {
      * @return {Promise<Test>}
      */
     async createAndRun() {
-        let type = this.config.type;
-
-        return await this.loaderIO.tests.create({
+        const options = {
             name:      this.config.name,
-            test_type: this.config.type,
             duration:  this.config.duration,
-            initial:   this.config.clientsStart,
-            total:     this.config.clients,
             timeout:   this.config.timeout,
             notes:     this.config.notes,
             tag_names: this.config.tags,
+            initial:   this.config.clientsStart,
+            total:     this.config.clients,
+            test_type: this.config.type,
             urls:      [{
                 url:            this.configApp.domain.replace(/\|+$/, '') + '/' + this.config.request.path.replace(/^\|+/, ''),
                 request_type:   this.config.request.type,
@@ -67,7 +74,17 @@ export default class Task {
                 authentication: this.config.request.authentication,
                 variables:      this.config.request.variables,
             }]
-        });
+        };
+
+        if (this.dryRun === true) {
+            return Promise.resolve(new Test(this.loaderIO, {
+                ...options,
+                status:  Test.STATUS.COMPLETE,
+                test_id: 'dryRun-randomId-' + random.int(1000000, 9999999),
+            }));
+        }
+
+        return await this.loaderIO.tests.create(options);
     }
 
     /**
@@ -76,9 +93,13 @@ export default class Task {
      * @return {Promise<Test>}
      */
     async rerun(test) {
-        // TODO update need because changed settings?
-
-        await test.run();
+        if (this.dryRun === true) {
+            test.status = Test.STATUS.COMPLETE;
+        }
+        else {
+            // TODO update need because changed settings?
+            await test.run();
+        }
 
         return test;
     }
@@ -114,6 +135,7 @@ export default class Task {
         // get the newest result and wait to become ready
         const resultFinder = new ResultFinder({
             loaderIO: this.loaderIO,
+            dryRun:   this.dryRun,
             test
         });
         const result       = await resultFinder.find();

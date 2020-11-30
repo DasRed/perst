@@ -1,7 +1,8 @@
-import {Application} from 'loader.io.api';
+import Application from 'loader.io.api/dist/Application/Application.js';
+import logger from '../logger.js';
 
 export default async function validateDomain(loaderIO, config) {
-    const domain       = new URL(config.app.domain);
+    const domain = new URL(config.app.domain);
 
     try {
         const applications = await loaderIO.applications.list();
@@ -14,7 +15,7 @@ export default async function validateDomain(loaderIO, config) {
         return application.status === Application.STATUS.VERIFIED;
     }
     catch (error) {
-        console.log(error);
+        logger.log(error);
         return false;
     }
 };
