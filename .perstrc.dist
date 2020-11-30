@@ -11,9 +11,9 @@ app:
 tasks:
     tasks1:
         name: $CI_ENV-test1 # required
-        type: Clients per test # is default --> test_type
-#        type: Clients per second
-#        type: Maintain client load
+#        type: per-test
+        type: per-second # is default --> test_type
+#        type: maintain-load
         duration: 60 # in seconds
         clientsStart: 1 # is default, only for "Maintain client load" test type --> initial
         clients: 25 # --> total

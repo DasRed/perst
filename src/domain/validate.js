@@ -1,4 +1,4 @@
-import Application from 'loader.io.api/src/Application/Application.js';
+import {Application} from 'loader.io.api';
 
 export default async function validateDomain(loaderIO, config) {
     const domain       = new URL(config.app.domain);

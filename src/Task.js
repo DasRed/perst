@@ -1,4 +1,4 @@
-import Test from 'loader.io.api/dist/Tests/Test.js';
+import {Test} from 'loader.io.api';
 import * as logger from './logger.js';
 import chalk from 'chalk';
 import ResultFinder from './ResultFinder.js';
@@ -48,24 +48,10 @@ export default class Task {
      */
     async createAndRun() {
         let type = this.config.type;
-        switch (this.config.type) {
-            case 'Clients per test':
-                type = Test.TYPE.CLIENTS_PER_TEST;
-                break;
-
-            case 'Maintain client load':
-                type = Test.TYPE.MAINTAIN_CLIENT_LOAD;
-                break;
-
-            case 'Clients per second':
-            default:
-                type = Test.TYPE.CLIENTS_PER_SECOND;
-                break;
-        }
 
         return await this.loaderIO.tests.create({
             name:      this.config.name,
-            test_type: type,
+            test_type: this.config.type,
             duration:  this.config.duration,
             initial:   this.config.clientsStart,
             total:     this.config.clients,

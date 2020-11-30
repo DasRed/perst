@@ -1,5 +1,5 @@
 import unknownPropertyObject from './unknownPropertyObject.js';
-import Url from 'loader.io.api/src/Tests/Url.js';
+import {Url, Test} from 'loader.io.api';
 
 /** @var {ValidationSchema} */
 export default {
@@ -47,9 +47,9 @@ export default {
             },
             type:           {
                 type:     'enum',
-                values:   ['Clients per test', 'Clients per second', 'Maintain client load'],
+                values:   [Test.TYPE.CLIENTS_PER_TEST, Test.TYPE.CLIENTS_PER_SECOND, Test.TYPE.MAINTAIN_CLIENT_LOAD],
                 required: true,
-                default:  'Clients per test',
+                default:  Test.TYPE.CLIENTS_PER_SECOND,
             },
             duration:       {
                 type:     'number',

@@ -1,4 +1,4 @@
-import Result from 'loader.io.api/dist/Tests/Result.js';
+import {Result} from 'loader.io.api';
 
 export default class ResultFinder {
     /**

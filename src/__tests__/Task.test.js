@@ -1,4 +1,4 @@
-import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
+import LoaderIO from 'loader.io.api';
 import Task from '../Task.js';
 
 describe('Task', () => {
