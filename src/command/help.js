@@ -8,7 +8,7 @@ import logger from '../logger.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default async function () {
-    const help = await fs.readFile(__dirname + '/../../help.md', 'utf-8');
+    const help = await fs.readFile(__dirname + '/../../README.md', 'utf-8');
 
     logger.log(`\n${help.replace('__VERSION__', chalk.green(version))}\n`);
 }

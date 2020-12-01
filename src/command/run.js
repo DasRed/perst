@@ -1,14 +1,18 @@
 import chalk from 'chalk';
-import config from '../config/index.js';
+import configFn from '../config/index.js';
 import validateDomain from '../domain/validate.js';
-import loaderIO from '../loaderIO.js';
 import Task from '../Task.js';
 import logger from '../logger.js';
+import cli from '../cli.js';
+import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
 
 export default async function () {
+    const config = await configFn(cli.config);
     if (config.dryRun === true) {
-        //logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
+        logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
     }
+
+    const loaderIO = new LoaderIO({...config.api});
 
     // using a async function around, because jest does not allow top level await for coverage
     logger.log(`Using domain ${chalk.green(config.app.domain)}`);

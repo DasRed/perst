@@ -1,6 +1,5 @@
 import copy from 'rollup-plugin-copy';
 import clear from 'rollup-plugin-clear';
-import es2cjs from 'rollup-es2cjs-fix';
 import {builtinModules} from 'module';
 import {dependencies} from './package.json';
 
@@ -8,13 +7,13 @@ export default {
     input:    './src/index.js',
     output:   {
         dir:                 './dist/',
-        format:              'cjs',
+        format:              'es',
         exports:             'named',
         sourcemap:           false,
         preserveModules:     true,
         preserveModulesRoot: 'src',
     },
-    external: [...builtinModules, ...Object.keys(dependencies)],
+    external: (id) => [...builtinModules, ...Object.keys(dependencies)].includes(id) || /loader\.io\.api/.test(id),
     plugins:  [
         clear({targets: ['./dist/']}),
         copy({
@@ -24,7 +23,6 @@ export default {
                     dest: 'dist'
                 },
             ]
-        }),
-        es2cjs(),
+        })
     ]
 };

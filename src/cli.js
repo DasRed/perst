@@ -5,6 +5,7 @@ const cli = yargsParser(process.argv.slice(2), {
         'camel-case-expansion': true
     },
     alias:         {
+        c: 'config',
         d: 'dry-run',
         h: 'help',
         v: 'version',
