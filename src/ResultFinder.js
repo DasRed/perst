@@ -20,20 +20,24 @@ export default class ResultFinder {
      */
     async find() {
         if (this.dryRun === true) {
-            return Promise.resolve(new Result({
-                result_id:          'dryRun-randomId-' + random.int(1000000, 9999999),
-                started_at:         new Date(),
-                status:             Result.STATUS.READY,
-                public_results_url: 'https://www.example.de',
-                success:            100,
-                error:              0,
-                timeout_error:      0,
-                network_error:      0,
-                data_sent:          random.int(100, 9999),
-                data_received:      random.int(1000, 9999),
-                avg_response_time:  random.int(10, 250),
-                avg_error_rate:     0
-            }));
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(new Result({
+                        result_id:          'dryRun-randomId-' + random.int(1000000, 9999999),
+                        started_at:         new Date(),
+                        status:             Result.STATUS.READY,
+                        public_results_url: 'https://www.example.de',
+                        success:            100,
+                        error:              0,
+                        timeout_error:      0,
+                        network_error:      0,
+                        data_sent:          random.int(100, 9999),
+                        data_received:      random.int(1000, 9999),
+                        avg_response_time:  random.int(10, 250),
+                        avg_error_rate:     0
+                    }));
+                }, 2500);
+            });
         }
 
         let result = await this.getFirstResultFromTest();

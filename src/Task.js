@@ -110,10 +110,9 @@ export default class Task {
         // message start stuff
         const timeStart = (new Date()).getTime();
         const message   = `${chalk.yellow('•')} Task ${chalk.green(this.name)}`;
-        let interval;
-        if (this.config.ci !== true) {
-            interval = setInterval(() => logger.log(`\r${message} (${formatMS(timeStart)})                 `, false), 10);
-        }
+        logger.log(`\r${message}`, false)
+
+        const interval = setInterval(() => logger.log(this.config.ci !== true ? `\r${message} (${formatMS(timeStart)})                 ` : '.', false), this.config.ci !== true ? 10 : 1000);
 
         // find the test
         const tests = await this.loaderIO.tests.list();
@@ -146,15 +145,14 @@ export default class Task {
 
         // done infos
         const timeEnd = (new Date()).getTime();
-        if (this.config.ci !== true) {
-            clearInterval(interval);
-        }
+        clearInterval(interval);
 
         const chalkMethod = this.result === Task.RESULT.SUCCESS ? chalk.green : chalk.red;
-        const stateIcon = chalkMethod(this.result === Task.RESULT.SUCCESS ? '✔' : '✘');
-        const timeInfo = this.config.ci !== true ? ` (${formatMS(timeStart, timeEnd)})` : '';
+        const stateIcon   = chalkMethod(this.result === Task.RESULT.SUCCESS ? '✔' : '✘');
+        const timeInfo    = this.config.ci !== true ? ` (${formatMS(timeStart, timeEnd)})                 ` : '';
 
-        logger.log(`\r${stateIcon}︎ Task ${chalk.green(this.name)}${timeInfo}                 `);
+        logger.log(this.config.ci !== true ? '\r' : '', this.config.ci);
+        logger.log(`${stateIcon}︎Task ${chalk.green(this.name)}${timeInfo}`);
         logger.log(`    AVG Response Time: ${chalkMethod(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.options.threshold.avgResponseTime)} ms)`);
         logger.log(`    AVG Error Rate: ${chalkMethod(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.options.threshold.avgErrorRate)})`);
 
