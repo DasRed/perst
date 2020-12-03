@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - 15
+  - 15.3.0
 
 cache:
   directories:
@@ -15,5 +15,5 @@ install:
 
 script:
   - npm run test
-  - npm run coveralls
+#  - npm run coveralls
 

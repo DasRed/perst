@@ -1,17 +1,16 @@
 import {cosmiconfig} from 'cosmiconfig';
-import path from 'path';
 import yamlLoader from './yamlLoader.js';
-import schema from './schema.js';
 import Validator from 'fastest-validator';
 import logger from '../logger.js';
 import chalk from 'chalk';
+import schemaFn from './schema.js';
 
 /**
  *
- * @param {string} [file]
+ * @param {Object} cli
  * @return {Promise<Config>}
  */
-export default async (file) => {
+export default async (cli) => {
     // using a cosmiconfigSync, because jest does not allow top level await for coverage, which is needed for explorer.search
     // load the config
     const explorer = cosmiconfig('perst', {
@@ -24,8 +23,8 @@ export default async (file) => {
     });
 
     let result;
-    if (file) {
-        result = await explorer.load(file);
+    if (cli.config) {
+        result = await explorer.load(cli.config);
     }
     else {
         result = await explorer.search();
@@ -37,7 +36,7 @@ export default async (file) => {
     logger.log(`Using configuration ${chalk.yellow(result.filepath)}.`);
 
     // validate the config
-    const errors = (new Validator()).validate(result.config, schema);
+    const errors = (new Validator()).validate(result.config, schemaFn(cli));
     if (errors !== true) {
         throw new Error(`Config is not valid. ${errors.map((error) => error.message).join(' ')}`);
     }
