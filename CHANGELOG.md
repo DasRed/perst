@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/DasRed/perst/compare/v1.0.1...v1.0.2) (2020-12-03)
+
+
+### Bug Fixes
+
+* releases handling ([e32a47e](https://github.com/DasRed/perst/commit/e32a47eb9c7450f4f8c30ac72ecfb20d93aa8ca6))
+
 ## [1.0.1](https://github.com/DasRed/perst/compare/v1.0.0...v1.0.1) (2020-12-03)
 
 
