@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/DasRed/perst/compare/v1.0.2...v1.1.0) (2020-12-03)
+
+
+### Features
+
+* adding ci options ([62e8029](https://github.com/DasRed/perst/commit/62e8029729b378c7e2d25f3b990b10dba0dc958f))
+
 ## [1.0.2](https://github.com/DasRed/perst/compare/v1.0.1...v1.0.2) (2020-12-03)
 
 
