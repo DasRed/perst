@@ -113,11 +113,7 @@ export default class Task {
         // message start stuff
         const timeStart = (new Date()).getTime();
         const message   = `${chalk.yellow('•')} Task ${chalk.green(this.name)}`;
-        logger.log(`${message} (${formatMS(timeStart)})`, false);
-        const interval = setInterval(() => {
-            logger.removeLastLine();
-            logger.log(`${message} (${formatMS(timeStart)})`, false);
-        }, 10);
+        const interval = setInterval(() => logger.log(`\r${message} (${formatMS(timeStart)})`, false), 10);
 
         // find the test
         const tests = await this.loaderIO.tests.list();
@@ -151,14 +147,13 @@ export default class Task {
         // done infos
         const timeEnd = (new Date()).getTime();
         clearInterval(interval);
-        logger.removeLastLine();
         if (this.result === Task.RESULT.SUCCESS) {
-            logger.log(`${chalk.green('✔')}︎ Task ${chalk.green(this.name)} (${formatMS(timeStart, timeEnd)})`);
+            logger.log(`\r${chalk.green('✔')}︎ Task ${chalk.green(this.name)} (${formatMS(timeStart, timeEnd)})`);
             logger.log(`    AVG Response Time: ${chalk.green(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.config.threshold.avgResponseTime)} ms)`);
             logger.log(`    AVG Error Rate: ${chalk.green(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.config.threshold.avgErrorRate)})`);
         }
         else {
-            logger.log(`${chalk.red('✘')}︎ Task ${chalk.red(this.name)} (${formatMS(timeStart, timeEnd)})`);
+            logger.log(`\r${chalk.red('✘')}︎ Task ${chalk.red(this.name)} (${formatMS(timeStart, timeEnd)})`);
             logger.log(`    AVG Response Time: ${chalk.red(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.config.threshold.avgResponseTime)} ms)`);
             logger.log(`    AVG Error Rate: ${chalk.red(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.config.threshold.avgErrorRate)})`);
         }
