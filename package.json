@@ -18,7 +18,7 @@
         "commit": "git-cz",
         "publish:check": "semantic-release --branch master --no-ci --dry-run",
         "prepublishOnly": "npm run test && npm run build && npm run semantic-release",
-        "semantic-release": "semantic-release -- --no-ci",
+        "semantic-release": "semantic-release --no-ci",
         "test": "jest --coverage",
         "coveralls": "cat ./coverage/lcov.info | coveralls"
     },

@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/DasRed/perst/compare/v1.0.0...v1.0.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* removing unused dependencies ([8cec2fc](https://github.com/DasRed/perst/commit/8cec2fccb9954dc67365100190f32db9044a9b9a))
+* writing to console ([d7855ca](https://github.com/DasRed/perst/commit/d7855ca88fb11e176b73ab9353176f64306405d2))
+* writing to console ([1d3583c](https://github.com/DasRed/perst/commit/1d3583c984f2f68571e50b89da861d948bbf2f88))
+
 # 1.0.0 (2020-12-03)
 
 
