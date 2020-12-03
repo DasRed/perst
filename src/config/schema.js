@@ -13,7 +13,12 @@ export default function (cli) {
         dryRun:   {
             type:     'boolean',
             required: true,
-            default:  cli.dryRun,
+            default:  cli.dryRun || false,
+        },
+        ci:       {
+            type:     'boolean',
+            required: true,
+            default:  cli.ci || false,
         },
         api:      {
             type:   'object',

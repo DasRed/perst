@@ -24,12 +24,11 @@ export default async function (cli) {
 
     // make it to tasks
     logger.log(`Found ${chalk.yellowBright(Object.values(config.tasks).length)} performance test to run.`);
-    const tasks = Object.entries(config.tasks).map(([name, configTask]) => new Task({
+    const tasks = Object.entries(config.tasks).map(([name, options]) => new Task({
         loaderIO,
         name,
-        dryRun:    config.dryRun,
-        config:    configTask,
-        configApp: config.app,
+        options,
+        config,
     }));
 
     // run the tasks in sequential

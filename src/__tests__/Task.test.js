@@ -3,16 +3,16 @@ import Task from '../Task.js';
 
 describe('Task', () => {
     test('.constructor()', () => {
+        const options = {};
         const config = {};
-        const configApp = {};
         const loaderIO = new LoaderIO({token: 'a'});
 
-        const task = new Task({loaderIO, name: 'b', config, configApp});
+        const task = new Task({loaderIO, name: 'b', options, config});
 
         expect(task.loaderIO).toBe(loaderIO);
         expect(task.name).toBe('b');
+        expect(task.options).toBe(options);
         expect(task.config).toBe(config);
-        expect(task.configApp).toBe(configApp);
         expect(task.status).toBe(Task.STATUS.PENDING);
         expect(task.result).toBe(Task.RESULT.PENDING);
         expect(task.values).toBeInstanceOf(Object);

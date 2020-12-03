@@ -26,22 +26,19 @@ export default class Task {
      *
      * @param {LoaderIO} loaderIO
      * @param {string} name
+     * @param {Object} options
      * @param {Object} config
-     * @param {Object} configApp
-     * @param {Boolean} [dryRun]
      */
     constructor({
                     loaderIO,
                     name,
+                    options,
                     config,
-                    configApp,
-                    dryRun = false,
                 }) {
-        this.loaderIO  = loaderIO;
-        this.name      = name;
-        this.config    = config;
-        this.configApp = configApp;
-        this.dryRun    = dryRun;
+        this.loaderIO = loaderIO;
+        this.name     = name;
+        this.options  = options;
+        this.config   = config;
 
         this.status = Task.STATUS.PENDING;
         this.result = Task.RESULT.PENDING;
@@ -57,26 +54,26 @@ export default class Task {
      */
     async createAndRun() {
         const options = {
-            name:      this.config.name,
-            duration:  this.config.duration,
-            timeout:   this.config.timeout,
-            notes:     this.config.notes,
-            tag_names: this.config.tags,
-            initial:   this.config.clientsStart,
-            total:     this.config.clients,
-            test_type: this.config.type,
+            name:      this.options.name,
+            duration:  this.options.duration,
+            timeout:   this.options.timeout,
+            notes:     this.options.notes,
+            tag_names: this.options.tags,
+            initial:   this.options.clientsStart,
+            total:     this.options.clients,
+            test_type: this.options.type,
             urls:      [{
-                url:            this.configApp.domain.replace(/\|+$/, '') + '/' + this.config.request.path.replace(/^\|+/, ''),
-                request_type:   this.config.request.type,
-                payload_file:   this.config.request.payloadFile,
-                headers:        this.config.request.headers,
-                request_params: this.config.request.parameters,
-                authentication: this.config.request.authentication,
-                variables:      this.config.request.variables,
+                url:            this.config.app.domain.replace(/\|+$/, '') + '/' + this.options.request.path.replace(/^\|+/, ''),
+                request_type:   this.options.request.type,
+                payload_file:   this.options.request.payloadFile,
+                headers:        this.options.request.headers,
+                request_params: this.options.request.parameters,
+                authentication: this.options.request.authentication,
+                variables:      this.options.request.variables,
             }]
         };
 
-        if (this.dryRun === true) {
+        if (this.config.dryRun === true) {
             return Promise.resolve(new Test(this.loaderIO, {
                 ...options,
                 status:  Test.STATUS.COMPLETE,
@@ -93,7 +90,7 @@ export default class Task {
      * @return {Promise<Test>}
      */
     async rerun(test) {
-        if (this.dryRun === true) {
+        if (this.config.dryRun === true) {
             test.status = Test.STATUS.COMPLETE;
         }
         else {
@@ -113,11 +110,14 @@ export default class Task {
         // message start stuff
         const timeStart = (new Date()).getTime();
         const message   = `${chalk.yellow('•')} Task ${chalk.green(this.name)}`;
-        const interval = setInterval(() => logger.log(`\r${message} (${formatMS(timeStart)})`, false), 10);
+        let interval;
+        if (this.config.ci !== true) {
+            interval = setInterval(() => logger.log(`\r${message} (${formatMS(timeStart)})                 `, false), 10);
+        }
 
         // find the test
         const tests = await this.loaderIO.tests.list();
-        let test    = tests.find((test) => test.name === this.config.name);
+        let test    = tests.find((test) => test.name === this.options.name);
 
         // rerun or create and run the test
         if (test instanceof Test) {
@@ -131,7 +131,7 @@ export default class Task {
         // get the newest result and wait to become ready
         const resultFinder = new ResultFinder({
             loaderIO: this.loaderIO,
-            dryRun:   this.dryRun,
+            dryRun:   this.config.dryRun,
             test
         });
         const result       = await resultFinder.find();
@@ -146,17 +146,17 @@ export default class Task {
 
         // done infos
         const timeEnd = (new Date()).getTime();
-        clearInterval(interval);
-        if (this.result === Task.RESULT.SUCCESS) {
-            logger.log(`\r${chalk.green('✔')}︎ Task ${chalk.green(this.name)} (${formatMS(timeStart, timeEnd)})`);
-            logger.log(`    AVG Response Time: ${chalk.green(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.config.threshold.avgResponseTime)} ms)`);
-            logger.log(`    AVG Error Rate: ${chalk.green(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.config.threshold.avgErrorRate)})`);
+        if (this.config.ci !== true) {
+            clearInterval(interval);
         }
-        else {
-            logger.log(`\r${chalk.red('✘')}︎ Task ${chalk.red(this.name)} (${formatMS(timeStart, timeEnd)})`);
-            logger.log(`    AVG Response Time: ${chalk.red(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.config.threshold.avgResponseTime)} ms)`);
-            logger.log(`    AVG Error Rate: ${chalk.red(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.config.threshold.avgErrorRate)})`);
-        }
+
+        const chalkMethod = this.result === Task.RESULT.SUCCESS ? chalk.green : chalk.red;
+        const stateIcon = chalkMethod(this.result === Task.RESULT.SUCCESS ? '✔' : '✘');
+        const timeInfo = this.config.ci !== true ? ` (${formatMS(timeStart, timeEnd)})` : '';
+
+        logger.log(`\r${stateIcon}︎ Task ${chalk.green(this.name)}${timeInfo}                 `);
+        logger.log(`    AVG Response Time: ${chalkMethod(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.options.threshold.avgResponseTime)} ms)`);
+        logger.log(`    AVG Error Rate: ${chalkMethod(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.options.threshold.avgErrorRate)})`);
 
         return this;
     }
@@ -167,11 +167,11 @@ export default class Task {
      */
     async validate() {
         this.result = Task.RESULT.SUCCESS;
-        if (this.values.avgResponseTime > this.config.threshold.avgResponseTime) {
+        if (this.values.avgResponseTime > this.options.threshold.avgResponseTime) {
             this.result = Task.RESULT.FAILED;
         }
 
-        if (this.values.avgErrorRate > this.config.avgErrorRate) {
+        if (this.values.avgErrorRate > this.options.avgErrorRate) {
             this.result = Task.RESULT.FAILED;
         }
 
