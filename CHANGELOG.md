@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/DasRed/perst/compare/v1.1.0...v1.1.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* better ci and none ci stdout output ([2221c82](https://github.com/DasRed/perst/commit/2221c82887f43c1ff1723806dc76d9b627270b6c))
+
 # [1.1.0](https://github.com/DasRed/perst/compare/v1.0.2...v1.1.0) (2020-12-03)
 
 
