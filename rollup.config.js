@@ -13,13 +13,17 @@ export default {
         preserveModules:     true,
         preserveModulesRoot: 'src',
     },
-    external: (id) => [...builtinModules, ...Object.keys(dependencies)].includes(id) || /loader\.io\.api/.test(id),
+    external: (id) => [...builtinModules, ...Object.keys(dependencies)].includes(id) || /loader\.io\.api/.test(id) || /dirname/.test(id),
     plugins:  [
         clear({targets: ['./dist/']}),
         copy({
             targets: [
                 {
                     src:  'src/cli.js',
+                    dest: 'dist'
+                },
+                {
+                    src:  'src/dirname.cjs',
                     dest: 'dist'
                 },
             ]
