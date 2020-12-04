@@ -1,6 +1,6 @@
 # supports env variables
 
-dryRun: true # is default
+dryRun: false # is default
 
 api:
     token: bb74abe565ec005944ffcbfa846431e1 # required

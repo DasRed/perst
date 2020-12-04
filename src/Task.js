@@ -63,13 +63,13 @@ export default class Task {
             total:     this.options.clients,
             test_type: this.options.type,
             urls:      [{
-                url:            this.config.app.domain.replace(/\|+$/, '') + '/' + this.options.request.path.replace(/^\|+/, ''),
-                request_type:   this.options.request.type,
-                payload_file:   this.options.request.payloadFile,
-                headers:        this.options.request.headers,
-                request_params: this.options.request.parameters,
-                authentication: this.options.request.authentication,
-                variables:      this.options.request.variables,
+                url:              this.config.app.domain.replace(/\/+$/, '') + '/' + this.options.request.path.replace(/^\/+/, ''),
+                request_type:     this.options.request.type,
+                payload_file_url: this.options.request.payloadFile,
+                headers:          this.options.request.headers,
+                request_params:   this.options.request.parameters,
+                authentication:   this.options.request.authentication,
+                variables:        this.options.request.variables,
             }]
         };
 
@@ -81,7 +81,7 @@ export default class Task {
             }));
         }
 
-        return await this.loaderIO.tests.create(options);
+        return this.loaderIO.tests.create(options);
     }
 
     /**
@@ -115,6 +115,7 @@ export default class Task {
         const interval = setInterval(() => logger.log(this.config.ci !== true ? `\r${message} (${formatMS(timeStart)})                 ` : '.', false), this.config.ci !== true ? 10 : 1000);
 
         // find the test
+        /** @var {Test[]} */
         const tests = await this.loaderIO.tests.list();
         let test    = tests.find((test) => test.name === this.options.name);
 
@@ -152,7 +153,7 @@ export default class Task {
         const timeInfo    = this.config.ci !== true ? ` (${formatMS(timeStart, timeEnd)})                 ` : '';
 
         logger.log(this.config.ci !== true ? '\r' : '', this.config.ci);
-        logger.log(`${stateIcon}︎Task ${chalk.green(this.name)}${timeInfo}`);
+        logger.log(`${stateIcon}︎ Task ${chalk.green(this.name)}${timeInfo}`);
         logger.log(`    AVG Response Time: ${chalkMethod(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.options.threshold.avgResponseTime)} ms)`);
         logger.log(`    AVG Error Rate: ${chalkMethod(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.options.threshold.avgErrorRate)})`);
 
