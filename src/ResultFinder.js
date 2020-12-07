@@ -72,13 +72,9 @@ export default class ResultFinder {
             return result;
         }
 
-        return await new Promise((resolve) => {
+        return new Promise((resolve) => {
             setTimeout(async () => {
                 result = await test.results.get(result.result_id);
-
-                if (this.isResultFinished(result) === true) {
-                    resolve(result);
-                }
 
                 resolve(await this.waitForResult(test, result));
             }, 1000);
