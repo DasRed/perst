@@ -5,20 +5,18 @@ export default class ResultFinder {
     /**
      *
      * @param {LoaderIO} loaderIO
-     * @param {Test} test
      * @param {boolean} [dryRun = false]
      */
-    constructor({loaderIO, test, dryRun = false}) {
+    constructor(loaderIO, dryRun = false) {
         this.loaderIO = loaderIO;
         this.dryRun   = dryRun;
-        this.test     = test;
     }
 
     /**
-     *
+     * @param {Test} test
      * @return {Promise<Result>}
      */
-    async find() {
+    async find(test) {
         if (this.dryRun === true) {
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -40,20 +38,17 @@ export default class ResultFinder {
             });
         }
 
-        let result = await this.getFirstResultFromTest();
-        if (this.isResultFinished(result) === true) {
-            return result;
-        }
-
-        return await this.waitForResult(result);
+        let result = await this.getFirstResultFromTest(test);
+        return await this.waitForResult(test, result);
     }
 
     /**
      *
+     * @param {Test} test
      * @return {Promise<Result>}
      */
-    async getFirstResultFromTest() {
-        const results = await this.test.results.list();
+    async getFirstResultFromTest(test) {
+        const results = await test.results.list();
         return results.shift();
     }
 
@@ -68,23 +63,24 @@ export default class ResultFinder {
 
     /**
      *
+     * @param {Test} test
      * @param {Result} result
      * @return {Promise<Result>}
      */
-    async waitForResult(result) {
+    async waitForResult(test, result) {
         if (this.isResultFinished(result) === true) {
             return result;
         }
 
         return await new Promise((resolve) => {
             setTimeout(async () => {
-                result = await this.test.results.get(result.result_id);
+                result = await test.results.get(result.result_id);
 
                 if (this.isResultFinished(result) === true) {
                     resolve(result);
                 }
 
-                resolve(await this.waitForResult(result));
+                resolve(await this.waitForResult(test, result));
             }, 1000);
         });
     }

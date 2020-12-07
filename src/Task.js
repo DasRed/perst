@@ -1,13 +1,7 @@
-import chalk from 'chalk';
 import random from 'random';
 import Test from 'loader.io.api/dist/Tests/Test.js';
-import logger from './logger.js';
 import ResultFinder from './ResultFinder.js';
-import prettyMilliseconds from 'pretty-ms';
-
-function formatMS(start, end = (new Date()).getTime()) {
-    return prettyMilliseconds(end - start, {formatSubMilliseconds: true});
-}
+import Output from './Task/Output.js';
 
 export default class Task {
     static RESULT = {
@@ -39,6 +33,9 @@ export default class Task {
         this.name     = name;
         this.options  = options;
         this.config   = config;
+
+        this.output       = new Output(this, !!this.config.ci);
+        this.resultFinder = new ResultFinder(this.loaderIO, !!this.config.dryRun);
 
         this.status = Task.STATUS.PENDING;
         this.result = Task.RESULT.PENDING;
@@ -101,18 +98,19 @@ export default class Task {
         return test;
     }
 
+    /**
+     *
+     * @return {Promise<Task>}
+     */
     async run() {
         if (this.status !== Task.STATUS.PENDING) {
-            logger.log(`${chalk.red('✘')} Task ${chalk.red(this.name)} already started`);
+            this.output.alreadyFinished();
             return this;
         }
+        this.status = Task.STATUS.RUNNING;
 
         // message start stuff
-        const timeStart = (new Date()).getTime();
-        const message   = `${chalk.yellow('•')} Task ${chalk.green(this.name)}`;
-        logger.log(`\r${message}`, false)
-
-        const interval = setInterval(() => logger.log(this.config.ci !== true ? `\r${message} (${formatMS(timeStart)})                 ` : '.', false), this.config.ci !== true ? 10 : 1000);
+        this.output.start();
 
         // find the test
         /** @var {Test[]} */
@@ -126,15 +124,9 @@ export default class Task {
         else {
             test = await this.createAndRun();
         }
-        this.status = Task.STATUS.RUNNING;
 
         // get the newest result and wait to become ready
-        const resultFinder = new ResultFinder({
-            loaderIO: this.loaderIO,
-            dryRun:   this.config.dryRun,
-            test
-        });
-        const result       = await resultFinder.find();
+        const result = await this.resultFinder.find(test);
 
         // set the values
         this.status                 = Task.STATUS.FINISHED;
@@ -144,18 +136,7 @@ export default class Task {
         // validate the results
         this.validate();
 
-        // done infos
-        const timeEnd = (new Date()).getTime();
-        clearInterval(interval);
-
-        const chalkMethod = this.result === Task.RESULT.SUCCESS ? chalk.green : chalk.red;
-        const stateIcon   = chalkMethod(this.result === Task.RESULT.SUCCESS ? '✔' : '✘');
-        const timeInfo    = this.config.ci !== true ? ` (${formatMS(timeStart, timeEnd)})                 ` : '';
-
-        logger.log(this.config.ci !== true ? '\r' : '', this.config.ci);
-        logger.log(`${stateIcon}︎ Task ${chalk.green(this.name)}${timeInfo}`);
-        logger.log(`    AVG Response Time: ${chalkMethod(this.values.avgResponseTime)} ms (Threshold: ${chalk.yellow(this.options.threshold.avgResponseTime)} ms)`);
-        logger.log(`    AVG Error Rate: ${chalkMethod(this.values.avgErrorRate)} (Threshold: ${chalk.yellow(this.options.threshold.avgErrorRate)})`);
+        this.output.end();
 
         return this;
     }
