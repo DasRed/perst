@@ -15,7 +15,7 @@ export default class Output {
      */
     constructor(task, isCI = false) {
         this.task      = task;
-        this.isCI      = isCI;
+        this.isCI      = !!isCI;
         this.interval  = null;
         this.timeStart = null;
     }
@@ -25,7 +25,7 @@ export default class Output {
      * @return {Output}
      */
     alreadyFinished() {
-        logger.log(`${chalk.red('✘')} Task ${chalk.red(this.task.name)} already started`);
+        logger.log(`${chalk.red('✘')} Task ${chalk.red(this.task.name)} already started.`);
 
         return this;
     }

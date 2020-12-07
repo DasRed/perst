@@ -34,8 +34,8 @@ export default class Task {
         this.options  = options;
         this.config   = config;
 
-        this.output       = new Output(this, !!this.config.ci);
-        this.resultFinder = new ResultFinder(this.loaderIO, !!this.config.dryRun);
+        this.output       = new Output(this, this.config.ci);
+        this.resultFinder = new ResultFinder(this.loaderIO, this.config.dryRun);
 
         this.status = Task.STATUS.PENDING;
         this.result = Task.RESULT.PENDING;

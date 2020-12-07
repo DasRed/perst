@@ -9,7 +9,7 @@ export default class ResultFinder {
      */
     constructor(loaderIO, dryRun = false) {
         this.loaderIO = loaderIO;
-        this.dryRun   = dryRun;
+        this.dryRun   = !!dryRun;
     }
 
     /**
