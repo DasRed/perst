@@ -142,7 +142,7 @@ export default class Task {
         this.values.avgErrorRate    = result.avg_error_rate;
 
         // validate the results
-        await this.validate();
+        this.validate();
 
         // done infos
         const timeEnd = (new Date()).getTime();
@@ -162,15 +162,15 @@ export default class Task {
 
     /**
      *
-     * @return {Promise<Task>}
+     * @return {Task}
      */
-    async validate() {
+    validate() {
         this.result = Task.RESULT.SUCCESS;
         if (this.values.avgResponseTime > this.options.threshold.avgResponseTime) {
             this.result = Task.RESULT.FAILED;
         }
 
-        if (this.values.avgErrorRate > this.options.avgErrorRate) {
+        if (this.values.avgErrorRate > this.options.threshold.avgErrorRate) {
             this.result = Task.RESULT.FAILED;
         }
 
