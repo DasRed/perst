@@ -123,7 +123,7 @@ describe('ResultFinder', () => {
         const resultA = new Result({result_id: 42});
         const resultB = new Result({result_id: 22});
 
-        const test    = new Test({}, {});
+        const test          = new Test({}, {});
         const resultsGetSpy = jest.spyOn(test.results, 'get').mockResolvedValue(resultB);
 
         const finder = new ResultFinder(loaderIO);

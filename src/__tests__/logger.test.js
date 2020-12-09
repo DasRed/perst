@@ -7,7 +7,7 @@ describe('logger', () => {
         logger.log('nuff');
         expect(writeSpy).toHaveBeenCalledWith('nuff\n');
     });
-    
+
     test('.log() with new line', () => {
         const writeSpy = jest.spyOn(process.stdout, 'write').mockReturnValue(true);
 

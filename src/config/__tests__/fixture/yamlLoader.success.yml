@@ -1,6 +1,6 @@
 nuff: narf
 rofl: ${COPTER}
-lol: $COPTER
+lol:  $COPTER
 abc: &anker
   map: 42
 keks:

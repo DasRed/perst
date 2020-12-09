@@ -72,7 +72,7 @@ export default class Task {
         if (this.options.request instanceof Object) {
             urls.push(requestToUrlOptions(this.config.app.domain, this.options.request));
         }
-        
+
         if (this.options.requests instanceof Array) {
             this.options.requests.forEach((request) => urls.push(requestToUrlOptions(this.config.app.domain, request)));
         }
