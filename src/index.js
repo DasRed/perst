@@ -1,9 +1,10 @@
+import chalk from 'chalk';
+import yargsParser from 'yargs-parser';
 import help from './command/help.js';
 import version from './command/version.js';
 import run from './command/run.js';
 import logger from './logger.js';
-import chalk from 'chalk';
-import yargsParser from 'yargs-parser';
+import config from './config/index.js';
 
 (async function (args, environment) {
     const cli = yargsParser(args.slice(2), {
@@ -31,7 +32,7 @@ import yargsParser from 'yargs-parser';
             exitNumber = await version();
         }
         else {
-            exitNumber = await run(cli, environment);
+            exitNumber = await run(config(cli, environment));
         }
     }
     catch (error) {

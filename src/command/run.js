@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import configFn from '../config/index.js';
 import validateDomain from '../domain/validate.js';
 import Task from '../Task.js';
 import logger from '../logger.js';
@@ -7,12 +6,10 @@ import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
 
 /**
  *
- * @param {Object} cli
- * @param {Object} environment
+ * @param {Object} config
  * @return {Promise<number>}
  */
-export default async function (cli, environment) {
-    const config = await configFn(cli, environment);
+export default async function (config) {
     if (config.dryRun === true) {
         logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
     }
@@ -25,7 +22,7 @@ export default async function (cli, environment) {
     // validate app domain
     if (await validateDomain(loaderIO, config) === false) {
         logger.log(chalk.red(`Domain ${config.app.domain} is not registered or not validated!`));
-        process.exit(1);
+        return 1;
     }
 
     // make it to tasks

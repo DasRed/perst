@@ -9,7 +9,7 @@ import schemaFn from './schema.js';
  *
  * @param {Object} cli
  * @param {Object} environment
- * @return {Promise<Config>}
+ * @return {Promise<Object>}
  */
 export default async function (cli, environment) {
     // using a cosmiconfigSync, because jest does not allow top level await for coverage, which is needed for explorer.search
