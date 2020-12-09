@@ -3,7 +3,6 @@
 perst is a wrapper around LoaderIO, which can be configured and run in your commandline multiple tests and validates the measureable values like AVG Response Time and AVG Error Rate.
 
 # Command Line Options
-======================
 
 Usage: perst [options]
 
@@ -18,7 +17,6 @@ Basic options:
 | --dump-config <format>  | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
 
 # Configuration files
-=====================
 
 At the following locations in the root directory and format can be placed the configuration.
  
