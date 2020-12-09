@@ -19,7 +19,7 @@ export default {
         copy({
             targets: [
                 {
-                    src:  'src/cli.js',
+                    src:  'src/bin.js',
                     dest: 'dist'
                 },
                 {
