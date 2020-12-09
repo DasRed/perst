@@ -8,13 +8,29 @@ perst is a wrapper around LoaderIO, which can be configured and run in your comm
 Usage: perst [options]
 
 Basic options:
+| Switch                  | Description                                                                               |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| -c, --config <filename> | Use this config file (if argument is used but value is unspecified, defaults to .perstrc) |
+| -d, --dry-run           | Runs all test in dry-run mode                                                             |
+| -h, --help              | Show this help message                                                                    |
+| -v, --version           | Show version number                                                                       |
+| --ci                    | Runs this on a CI                                                                         |
 
--c, --config <filename>     Use this config file (if argument is used but value is unspecified, defaults to .perstrc)
+# Configuration files
+=====================
 
--d, --dry-run               Runs all test in dry-run mode
+At the following locations in the root directory and format can be placed the configuration.
+ 
+The files will be searched in this order. The first match will be used.
 
--h, --help                  Show this help message
+- package.json `{ "perst": {...} }`
+- .perstrc            yaml
+- .perstrc.json       json
+- .perstrc.yaml       yaml
+- .perstrc.yml        yaml
+- .perstrc.js         javascript
+- .perstrc.cjs        common js
+- perst.config.js     javascript
+- perst.config.cjs    common js
 
--v, --version               Show version number
-
---ci                        Runs this on a CI
+Or you run perst with the command line switch -c.
