@@ -1,3 +1,22 @@
+# [1.2.0](https://github.com/DasRed/perst/compare/v1.1.1...v1.2.0) (2020-12-09)
+
+
+### Bug Fixes
+
+* fixies in task creation ([597632d](https://github.com/DasRed/perst/commit/597632d106595756f32b383c9dc527c944aa1d57))
+* fixing task options avgErrorRate in threshold objec ([554f8a7](https://github.com/DasRed/perst/commit/554f8a7a7f19f6bdce3a7adb8a208ab6574af0d8))
+* refactor parameter handling and fixing return of run command ([4e5617c](https://github.com/DasRed/perst/commit/4e5617c282139e6c8f3fb5cd984f1dbcbe59cd02))
+
+
+### Features
+
+* **#1:** adding a version information to the perst config structure [#1](https://github.com/DasRed/perst/issues/1) resolved ([88caa89](https://github.com/DasRed/perst/commit/88caa89dde802eea9081d0fef3ca42c8629d5e3b))
+* **#2:** resolved [#2](https://github.com/DasRed/perst/issues/2): allowing multiple request for a task ([543621b](https://github.com/DasRed/perst/commit/543621b419a38ff6b5fc384e5207e06948a51970))
+* **#3:** resolve [#3](https://github.com/DasRed/perst/issues/3): dump the config ([0e514f5](https://github.com/DasRed/perst/commit/0e514f5815d91a8859c75626f40c1f87bceb16e6))
+* **#4:** resolve [#4](https://github.com/DasRed/perst/issues/4) allow yaml anchors ([2175084](https://github.com/DasRed/perst/commit/217508472e86aeff90be2978cc8d846db6444601))
+* **#4:** resolved [#4](https://github.com/DasRed/perst/issues/4): allowing multiple request for a task ([d079905](https://github.com/DasRed/perst/commit/d079905c910774dbfde12ab7cd6d686bfad5e8dc))
+* **#4:** resolved [#4](https://github.com/DasRed/perst/issues/4): allowing multiple request for a task ([b2ca514](https://github.com/DasRed/perst/commit/b2ca5142d1c28175e529ccfea751af02e2710b7a))
+
 ## [1.1.1](https://github.com/DasRed/perst/compare/v1.1.0...v1.1.1) (2020-12-03)
 
 
