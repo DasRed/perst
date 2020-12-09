@@ -7,7 +7,7 @@ import version from '../command/version.js';
 /** @type {SpyInstance<ReturnType<Required<T>[M]>, ArgsType<Required<T>[M]>>} */
 import run from '../command/run.js';
 /** @type {SpyInstance<ReturnType<Required<T>[M]>, ArgsType<Required<T>[M]>>} */
-import config from '../config/index.js';
+import configFn from '../config/index.js';
 import execute from '../execute.js';
 import cliConfig from '../config/cli.js';
 import logger from '../logger.js';
@@ -27,7 +27,7 @@ describe('index.js', () => {
         help.mockClear();
         version.mockClear();
         run.mockClear();
-        config.mockClear();
+        configFn.mockClear();
     });
 
     describe('help', () => {
@@ -128,7 +128,7 @@ describe('index.js', () => {
             [1, 1],
             [2, 2]
         ])('success', async (result, expected) => {
-            config.mockReturnValue(configValue);
+            configFn.mockResolvedValue(configValue);
             yargsParser.mockReturnValue(cli);
             run.mockResolvedValue(result);
 
@@ -139,12 +139,12 @@ describe('index.js', () => {
             expect(version).not.toHaveBeenCalled();
             expect(run).toHaveBeenCalledWith(configValue);
             expect(processExitSpy).toHaveBeenCalledWith(expected);
-            expect(config).toHaveBeenCalledWith(cli, environment);
+            expect(configFn).toHaveBeenCalledWith(cli, environment);
         });
 
         describe('error', () => {
             test('general', async () => {
-                config.mockReturnValue(configValue);
+                configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 run.mockRejectedValue(new Error('narf'));
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
@@ -156,7 +156,7 @@ describe('index.js', () => {
                 expect(version).not.toHaveBeenCalled();
                 expect(run).toHaveBeenCalled();
                 expect(processExitSpy).toHaveBeenCalledWith(1);
-                expect(config).toHaveBeenCalledWith(cli, environment);
+                expect(configFn).toHaveBeenCalledWith(cli, environment);
 
                 expect(loggerLogSpy).toHaveBeenCalledWith('\u001b[31mnarf\u001b[39m');
             });
@@ -168,7 +168,7 @@ describe('index.js', () => {
                 const error = new Error(message);
                 error.code = code;
 
-                config.mockReturnValue(configValue);
+                configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 run.mockRejectedValue(error);
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
@@ -180,7 +180,7 @@ describe('index.js', () => {
                 expect(version).not.toHaveBeenCalled();
                 expect(run).toHaveBeenCalled();
                 expect(processExitSpy).toHaveBeenCalledWith(1);
-                expect(config).toHaveBeenCalledWith(cli, environment);
+                expect(configFn).toHaveBeenCalledWith(cli, environment);
 
                 expect(loggerLogSpy).toHaveBeenCalledWith('\u001b[31mNo configuration file can be found.\u001b[39m');
             });

@@ -10,6 +10,14 @@ import Url from 'loader.io.api/dist/Tests/Url.js';
 export default function (cli) {
     return {
         $$strict: 'remove',
+        version:  {
+            type:     'number',
+            required: true,
+            default:  1,
+            min:      1,
+            max:      1,
+            integer:  true,
+        },
         dryRun:   {
             type:     'boolean',
             required: true,

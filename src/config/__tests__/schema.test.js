@@ -7,6 +7,14 @@ describe('schema.js', () => {
 
         expect(result).toEqual({
             $$strict: 'remove',
+            version:  {
+                type:     'number',
+                required: true,
+                default:  1,
+                min:      1,
+                max:      1,
+                integer:  true,
+            },
             dryRun:   {
                 type:     'boolean',
                 required: true,
@@ -223,6 +231,14 @@ describe('schema.js', () => {
 
         expect(result).toEqual({
             $$strict: 'remove',
+            version:  {
+                type:     'number',
+                required: true,
+                default:  1,
+                min:      1,
+                max:      1,
+                integer:  true,
+            },
             dryRun:   {
                 type:     'boolean',
                 required: true,

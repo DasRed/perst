@@ -4,7 +4,7 @@ import help from './command/help.js';
 import version from './command/version.js';
 import run from './command/run.js';
 import logger from './logger.js';
-import config from './config/index.js';
+import configFn from './config/index.js';
 import cliConfig from './config/cli.js';
 
 /**
@@ -25,7 +25,8 @@ export default async function (args, environment) {
             exitNumber = await version();
         }
         else {
-            exitNumber = await run(config(cli, environment));
+            const config = await configFn(cli, environment);
+            exitNumber = await run(config);
         }
     }
     catch (error) {
