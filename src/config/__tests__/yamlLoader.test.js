@@ -10,14 +10,16 @@ describe('yamlLoader.js', () => {
         expect(result).toEqual({
             nuff: 'narf',
             rofl: 'nope',
-            lol:  'nope'
+            lol:  'nope',
+            abc:  {map: 42},
+            keks: {map: 42},
         });
     });
 
-    test('failed',  () => {
+    test('failed', () => {
         const file    = __dirname + '/fixture/yamlLoader.failed.yml';
         const content = fs.readFileSync(file, 'utf-8');
 
-        expect( () => yamlLoader(file, content, {COPTER: 'nope'})).toThrowError(`YAML Error in ${file}:\nImplicit map keys need to be on a single line at line 1, column 1:\n\nnuff\n^^^^…\n`);
+        expect(() => yamlLoader(file, content, {COPTER: 'nope'})).toThrowError(`YAML Error in ${file}:\nImplicit map keys need to be on a single line at line 1, column 1:\n\nnuff\n^^^^…\n`);
     });
 });

@@ -14,7 +14,10 @@ export default function yamlLoader(filepath, content, environment) {
     );
 
     try {
-        return yaml.parse(content, {prettyErrors: true});
+        return yaml.parse(content, {
+            prettyErrors: true,
+            merge:        true
+        });
     }
     catch (error) {
         error.message = `YAML Error in ${filepath}:\n${error.message}`;
