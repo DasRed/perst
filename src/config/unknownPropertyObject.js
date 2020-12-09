@@ -2,7 +2,23 @@ import Validator from "fastest-validator";
 
 const validator = new Validator();
 
-export default function unknownPropertyObject(value, schema, field, parent, context) {
+/**
+ *
+ * @param {Object|null|undefined} value
+ * @param {Object} schema
+ * @param {string} field
+ * @return {undefined|string[]}
+ */
+
+/**
+ *
+ * @param value
+ * @param schema
+ * @param field
+ * @return {undefined|Object[]}
+ */
+export default function unknownPropertyObject(value, schema, field) {
+    //noinspection PointlessBooleanExpressionJS
     if (value === null || value === undefined || (value instanceof Object) === false) {
         return [{type: 'object'}];
     }
