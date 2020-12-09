@@ -34,7 +34,9 @@ export default async function (cli, environment) {
         throw new Error('no config found');
     }
 
-    logger.log(`Using configuration ${chalk.yellow(result.filepath)}.`);
+    if (cli.dumpConfig == null) {
+        logger.log(`Using configuration ${chalk.yellow(result.filepath)}.`);
+    }
 
     // validate the config
     const errors = (new Validator()).validate(result.config, schemaFn(cli));

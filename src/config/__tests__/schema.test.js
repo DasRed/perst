@@ -6,8 +6,8 @@ describe('schema.js', () => {
         const result = schema({});
 
         expect(result).toEqual({
-            $$strict: 'remove',
-            version:  {
+            $$strict:   'remove',
+            version:    {
                 type:     'number',
                 required: true,
                 default:  1,
@@ -15,17 +15,23 @@ describe('schema.js', () => {
                 max:      1,
                 integer:  true,
             },
-            dryRun:   {
+            dumpConfig: {
+                type:     'enum',
+                default:  undefined,
+                values:   [true, 'yaml', 'yml', 'json', 'js'],
+                optional: true,
+            },
+            dryRun:     {
                 type:     'boolean',
                 required: true,
                 default:  false,
             },
-            ci:       {
+            ci:         {
                 type:     'boolean',
                 required: true,
                 default:  false,
             },
-            api:      {
+            api:        {
                 type:   'object',
                 strict: 'remove',
                 props:  {
@@ -47,7 +53,7 @@ describe('schema.js', () => {
                     }
                 }
             },
-            app:      {
+            app:        {
                 type:   'object',
                 strict: 'remove',
                 props:  {
@@ -57,7 +63,7 @@ describe('schema.js', () => {
                     }
                 }
             },
-            tasks:    {
+            tasks:      {
                 type:     'custom',
                 check:    unknownPropertyObject,
                 minProps: 1,
@@ -225,13 +231,14 @@ describe('schema.js', () => {
 
     test('with cli values', () => {
         const result = schema({
-            dryRun: true,
-            ci:     true
+            dryRun:     true,
+            ci:         true,
+            dumpConfig: 'yaml',
         });
 
         expect(result).toEqual({
-            $$strict: 'remove',
-            version:  {
+            $$strict:   'remove',
+            version:    {
                 type:     'number',
                 required: true,
                 default:  1,
@@ -239,17 +246,23 @@ describe('schema.js', () => {
                 max:      1,
                 integer:  true,
             },
-            dryRun:   {
+            dumpConfig: {
+                type:     'enum',
+                default:  'yaml',
+                values:   [true, 'yaml', 'yml', 'json', 'js'],
+                optional: true,
+            },
+            dryRun:     {
                 type:     'boolean',
                 required: true,
                 default:  true,
             },
-            ci:       {
+            ci:         {
                 type:     'boolean',
                 required: true,
                 default:  true,
             },
-            api:      {
+            api:        {
                 type:   'object',
                 strict: 'remove',
                 props:  {
@@ -271,7 +284,7 @@ describe('schema.js', () => {
                     }
                 }
             },
-            app:      {
+            app:        {
                 type:   'object',
                 strict: 'remove',
                 props:  {
@@ -281,7 +294,7 @@ describe('schema.js', () => {
                     }
                 }
             },
-            tasks:    {
+            tasks:      {
                 type:     'custom',
                 check:    unknownPropertyObject,
                 minProps: 1,

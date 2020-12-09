@@ -15,6 +15,7 @@ Basic options:
 | -h, --help              | Show this help message                                                                    |
 | -v, --version           | Show version number                                                                       |
 | --ci                    | Runs this on a CI                                                                         |
+| --dump-config <format>  | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
 
 # Configuration files
 =====================

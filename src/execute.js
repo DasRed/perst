@@ -1,11 +1,9 @@
 import chalk from 'chalk';
 import yargsParser from 'yargs-parser';
-import help from './command/help.js';
-import version from './command/version.js';
-import run from './command/run.js';
 import logger from './logger.js';
 import configFn from './config/index.js';
 import cliConfig from './config/cli.js';
+import * as commands from './command/index.js';
 
 /**
  *
@@ -18,26 +16,30 @@ export default async function (args, environment) {
 
     let exitNumber;
     try {
+        const config = await configFn(cli, environment);
+        let command  = commands.run;
+
         if (cli.help) {
-            exitNumber = await help();
+            command = commands.help;
         }
         else if (cli.version) {
-            exitNumber = await version();
+            command = commands.version;
         }
-        else {
-            const config = await configFn(cli, environment);
-            exitNumber = await run(config);
+        else if (cli.dumpConfig) {
+            command = commands.dumpConfig;
         }
+
+        exitNumber = await command(config);
     }
     catch (error) {
-        exitNumber  = 1;
+        exitNumber = 1;
 
-        let message = error.message;
+        let message = chalk.red(error.message) + '\n' + error.stack;
         if (error.message === 'no config found' || error.code === 'ENOENT') {
-            message = 'No configuration file can be found.';
+            message = chalk.red('No configuration file can be found.');
         }
 
-        logger.log(chalk.red(message));
+        logger.log(message);
     }
 
     process.exit(exitNumber != null ? exitNumber : 0);

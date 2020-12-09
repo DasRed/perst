@@ -22,7 +22,8 @@ describe('config/index.js', () => {
         schemaFn.mockClear();
     });
 
-    test('load', async () => {
+    describe('load', () => {
+    test('without dumpConfig', async () => {
         const schema = {};
         const cli    = {config: 'narf'};
         const config = {};
@@ -72,6 +73,58 @@ describe('config/index.js', () => {
 
         expect(validatorValidateSpy).toHaveBeenCalledWith(config, schema);
     });
+
+    test('with dumpConfig', async () => {
+        const schema = {};
+        const cli    = {config: 'narf', dumpConfig: true};
+        const config = {};
+
+        const result = {
+            filepath: 'nuff',
+            config
+        };
+
+        const validatorValidateSpy = jest.fn().mockReturnValue(true);
+        const loadSpy              = jest.fn().mockResolvedValue(result);
+        const searchSpy            = jest.fn().mockResolvedValue(result);
+
+        Validator.mockReturnValue({validate: validatorValidateSpy});
+        schemaFn.mockReturnValue(schema);
+        yamlLoader.mockReturnValueOnce(42).mockReturnValueOnce(22).mockReturnValueOnce(12);
+        cosmiconfig.mockReturnValue({
+            load:   loadSpy,
+            search: searchSpy,
+        });
+
+        const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
+
+        expect(await configFn(cli, environment)).toBe(config);
+
+        expect(cosmiconfig).toHaveBeenCalledWith('perst', expect.any(Object));
+        expect(cosmiconfig.mock.calls[0][1].cache).toBe(false);
+        expect(cosmiconfig.mock.calls[0][1].loaders).toBeInstanceOf(Object);
+        expect(cosmiconfig.mock.calls[0][1].loaders['.yaml']).toBeInstanceOf(Function);
+        expect(cosmiconfig.mock.calls[0][1].loaders['.yml']).toBeInstanceOf(Function);
+        expect(cosmiconfig.mock.calls[0][1].loaders['noExt']).toBeInstanceOf(Function);
+
+        expect(cosmiconfig.mock.calls[0][1].loaders['.yaml']('A1', 'A2')).toBe(42);
+        expect(cosmiconfig.mock.calls[0][1].loaders['.yml']('B1', 'B2')).toBe(22);
+        expect(cosmiconfig.mock.calls[0][1].loaders['noExt']('C1', 'C2')).toBe(12);
+
+        expect(yamlLoader).toHaveBeenCalledTimes(3);
+        expect(yamlLoader).toHaveBeenNthCalledWith(1, 'A1', 'A2', environment);
+        expect(yamlLoader).toHaveBeenNthCalledWith(2, 'B1', 'B2', environment);
+        expect(yamlLoader).toHaveBeenNthCalledWith(3, 'C1', 'C2', environment);
+
+        expect(loadSpy).toHaveBeenCalledWith('narf');
+        expect(searchSpy).not.toHaveBeenCalled();
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+        expect(schemaFn).toHaveBeenCalledWith(cli);
+
+        expect(validatorValidateSpy).toHaveBeenCalledWith(config, schema);
+    });
+});
 
     test('search', async () => {
         const schema = {};

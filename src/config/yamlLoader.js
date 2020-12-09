@@ -1,4 +1,4 @@
-import yaml from 'yaml';
+import YAML from 'yaml';
 
 /**
  *
@@ -14,7 +14,7 @@ export default function yamlLoader(filepath, content, environment) {
     );
 
     try {
-        return yaml.parse(content, {
+        return YAML.parse(content, {
             prettyErrors: true,
             merge:        true
         });

@@ -9,8 +9,8 @@ import Url from 'loader.io.api/dist/Tests/Url.js';
  */
 export default function (cli) {
     return {
-        $$strict: 'remove',
-        version:  {
+        $$strict:   'remove',
+        version:    {
             type:     'number',
             required: true,
             default:  1,
@@ -18,17 +18,23 @@ export default function (cli) {
             max:      1,
             integer:  true,
         },
-        dryRun:   {
+        dumpConfig: {
+            type:     'enum',
+            default:  cli.dumpConfig,
+            values:   [true, 'yaml', 'yml', 'json', 'js'],
+            optional: true,
+        },
+        dryRun:     {
             type:     'boolean',
             required: true,
             default:  cli.dryRun || false,
         },
-        ci:       {
+        ci:         {
             type:     'boolean',
             required: true,
             default:  cli.ci || false,
         },
-        api:      {
+        api:        {
             type:   'object',
             strict: 'remove',
             props:  {
@@ -50,7 +56,7 @@ export default function (cli) {
                 }
             }
         },
-        app:      {
+        app:        {
             type:   'object',
             strict: 'remove',
             props:  {
@@ -60,7 +66,7 @@ export default function (cli) {
                 }
             }
         },
-        tasks:    {
+        tasks:      {
             type:     'custom',
             check:    unknownPropertyObject,
             minProps: 1,
