@@ -13,16 +13,16 @@ export default async function (config) {
     if (format === 'json') {
         logger.log(JSON.stringify(config, null, 4));
     }
-    else if (format === true || format === 'yaml' || format === 'yml') {
+    else if (format === 'js') {
+        logger.log(`export default ${JSON.stringify(config, null, 4)}`);
+    }
+    else {
         logger.log(YAML.stringify(config, {
             indent:         4,
             mapAsMap:       true,
             merge:          true,
             sortMapEntries: true,
         }));
-    }
-    else if (format === 'js') {
-        logger.log(`export default ${JSON.stringify(config, null, 4)}`);
     }
 
     return 0;
