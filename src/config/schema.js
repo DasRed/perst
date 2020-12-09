@@ -8,6 +8,85 @@ import Url from 'loader.io.api/dist/Tests/Url.js';
  * @return {Object}
  */
 export default function (cli) {
+    const request = {
+        type:   'object',
+        strict: 'remove',
+        props:  {
+            path:           {
+                type:     'string',
+                required: true,
+            },
+            type:           {
+                type:     'enum',
+                values:   Object.values(Url.TYPE),
+                required: true,
+                default:  Url.TYPE.GET,
+            },
+            payloadFile:    {
+                type:     'url',
+                optional: true,
+            },
+            headers:        {
+                type:     'object',
+                strict:   false,
+                minProps: 1,
+                optional: true,
+                default:  {
+                    'accept-encoding': 'gzip'
+                }
+            },
+            parameters:     {
+                type:     'object',
+                strict:   false,
+                minProps: 1,
+                optional: true,
+            },
+            authentication: {
+                type:     'object',
+                optional: true,
+                strict:   'remove',
+                props:    {
+                    type:     {
+                        type:     'enum',
+                        values:   ['basic'],
+                        required: true,
+                        default:  'basic',
+                    },
+                    login:    {
+                        type:     'string',
+                        required: true,
+                    },
+                    password: {
+                        type:     'string',
+                        required: true,
+                    },
+                },
+            },
+            variables:      {
+                type:     'array',
+                empty:    false,
+                optional: true,
+                items:    {
+                    type:  'object',
+                    props: {
+                        name:     {
+                            type:     'string',
+                            required: true
+                        },
+                        property: {
+                            type:     'string',
+                            required: true
+                        },
+                        source:   {
+                            type:     'string',
+                            required: true
+                        },
+                    },
+                },
+            },
+        },
+    };
+
     return {
         $$strict:   'remove',
         version:    {
@@ -150,83 +229,14 @@ export default function (cli) {
                     },
                 },
                 request:        {
-                    type:   'object',
-                    strict: 'remove',
-                    props:  {
-                        path:           {
-                            type:     'string',
-                            required: true,
-                        },
-                        type:           {
-                            type:     'enum',
-                            values:   Object.values(Url.TYPE),
-                            required: true,
-                            default:  Url.TYPE.GET,
-                        },
-                        payloadFile:    {
-                            type:     'url',
-                            optional: true,
-                        },
-                        headers:        {
-                            type:     'object',
-                            strict:   false,
-                            minProps: 1,
-                            optional: true,
-                            default:  {
-                                'accept-encoding': 'gzip'
-                            }
-                        },
-                        parameters:     {
-                            type:     'object',
-                            strict:   false,
-                            minProps: 1,
-                            optional: true,
-                        },
-                        authentication: {
-                            type:     'object',
-                            optional: true,
-                            strict:   'remove',
-                            props:    {
-                                type:     {
-                                    type:     'enum',
-                                    values:   ['basic'],
-                                    required: true,
-                                    default:  'basic',
-                                },
-                                login:    {
-                                    type:     'string',
-                                    required: true,
-                                },
-                                password: {
-                                    type:     'string',
-                                    required: true,
-                                },
-                            },
-                        },
-                        variables:      {
-                            type:     'array',
-                            empty:    false,
-                            optional: true,
-                            items:    {
-                                type:  'object',
-                                props: {
-                                    name:     {
-                                        type:     'string',
-                                        required: true
-                                    },
-                                    property: {
-                                        type:     'string',
-                                        required: true
-                                    },
-                                    source:   {
-                                        type:     'string',
-                                        required: true
-                                    },
-                                },
-                            },
-                        },
-                    },
+                    optional: true,
+                    ...request,
                 },
+                requests:       {
+                    type:     'array',
+                    optional: true,
+                    items:    request
+                }
             }
         }
     };

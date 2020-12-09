@@ -17,4 +17,5 @@
 # npm config
 .npmrc
 /test.js
+/test.yaml
 .perstrc

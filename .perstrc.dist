@@ -53,3 +53,6 @@ tasks:
                     name: variable 2 name # required
                     property: variable 2 property # required
                     source: variable 2 source # required
+        requests: # this is a list of request options. An entry has the same as the request entry
+                  # if both keys "request" and "requests" defined, then the value from request will be first and every entry of "requests" will be added after "request"
+            - ...

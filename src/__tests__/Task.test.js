@@ -162,6 +162,60 @@ describe('Task', () => {
             expect(test.urls[0].variables[0].property).toBe(options.request.variables[0].property);
             expect(test.urls[0].variables[0].source).toBe(options.request.variables[0].source);
         });
+
+        test('with multiple requests', async () => {
+            const test = new Test({}, {});
+
+            const config    = {
+                dryRun: false,
+                app:    {domain: 'https://www.example.de/'}
+            };
+            const loaderIO  = new LoaderIO({token: 'a'});
+            const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
+
+            const task = new Task({
+                loaderIO,
+                name:    'b',
+                options: {
+                    ...options,
+                    requests: [
+                        {path: '/lol'},
+                        {path: '/narf'}
+                    ]
+                },
+                config
+            });
+
+            expect(await task.createAndRun()).toBe(test);
+            expect(createSpy).toHaveBeenCalledTimes(1);
+            expect(createSpy.mock.calls).toHaveLength(1);
+            expect(createSpy.mock.calls[0]).toHaveLength(1);
+
+            const param = createSpy.mock.calls[0][0];
+            expect(param).toBeInstanceOf(Object);
+            expect(param.name).toBe(options.name);
+            expect(param.duration).toBe(options.duration);
+            expect(param.timeout).toBe(options.timeout);
+            expect(param.notes).toBe(options.notes);
+            expect(param.tag_names).toBe(options.tags);
+            expect(param.initial).toBe(options.clientsStart);
+            expect(param.total).toBe(options.clients);
+            expect(param.test_type).toBe(options.type);
+            expect(param.urls).toBeInstanceOf(Array);
+            expect(param.urls).toHaveLength(3);
+            expect(param.urls[0]).toBeInstanceOf(Object);
+            expect(param.urls[0].url).toBe('https://www.example.de/rolf/copter');
+            expect(param.urls[0].request_type).toBe(options.request.type);
+            expect(param.urls[0].payload_file_url).toBe(options.request.payloadFile);
+            expect(param.urls[0].headers).toBe(options.request.headers);
+            expect(param.urls[0].request_params).toBe(options.request.parameters);
+            expect(param.urls[0].authentication).toBe(options.request.authentication);
+            expect(param.urls[0].variables).toBe(options.request.variables);
+            expect(param.urls[1]).toBeInstanceOf(Object);
+            expect(param.urls[1].url).toBe('https://www.example.de/lol');
+            expect(param.urls[2]).toBeInstanceOf(Object);
+            expect(param.urls[2].url).toBe('https://www.example.de/narf');
+        });
     });
 
     describe('.rerun()', () => {
@@ -366,7 +420,7 @@ describe('Task', () => {
 
             const loaderIO = new LoaderIO({token: 'a'});
 
-            const task = new Task({
+            const task  = new Task({
                 loaderIO,
                 name: 'b',
                 options,

@@ -3,6 +3,24 @@ import Test from 'loader.io.api/dist/Tests/Test.js';
 import ResultFinder from './ResultFinder.js';
 import Output from './Task/Output.js';
 
+/**
+ *
+ * @param {string} domain
+ * @param {Object} request
+ * @return {Object}
+ */
+function requestToUrlOptions(domain, request) {
+    return {
+        url:              domain.replace(/\/+$/, '') + '/' + request.path.replace(/^\/+/, ''),
+        request_type:     request.type,
+        payload_file_url: request.payloadFile,
+        headers:          request.headers,
+        request_params:   request.parameters,
+        authentication:   request.authentication,
+        variables:        request.variables,
+    };
+}
+
 export default class Task {
     static RESULT = {
         PENDING: 'pending',
@@ -50,6 +68,15 @@ export default class Task {
      * @return {Promise<Test>}
      */
     async createAndRun() {
+        const urls = [];
+        if (this.options.request instanceof Object) {
+            urls.push(requestToUrlOptions(this.config.app.domain, this.options.request));
+        }
+        
+        if (this.options.requests instanceof Array) {
+            this.options.requests.forEach((request) => urls.push(requestToUrlOptions(this.config.app.domain, request)));
+        }
+
         const options = {
             name:      this.options.name,
             duration:  this.options.duration,
@@ -59,15 +86,7 @@ export default class Task {
             initial:   this.options.clientsStart,
             total:     this.options.clients,
             test_type: this.options.type,
-            urls:      [{
-                url:              this.config.app.domain.replace(/\/+$/, '') + '/' + this.options.request.path.replace(/^\/+/, ''),
-                request_type:     this.options.request.type,
-                payload_file_url: this.options.request.payloadFile,
-                headers:          this.options.request.headers,
-                request_params:   this.options.request.parameters,
-                authentication:   this.options.request.authentication,
-                variables:        this.options.request.variables,
-            }]
+            urls
         };
 
         if (this.config.dryRun === true) {
