@@ -4,11 +4,12 @@ import yaml from 'yaml';
  *
  * @param {string} filepath
  * @param {string} content
- * @return {Promise<Object|null>}
+ * @param {Object} environment
+ * @return {Object}
  */
-export default async function yamlLoader(filepath, content) {
-    content = Object.keys(process.env).reduce(
-        (content, variable) => content.replace(new RegExp(`\\$${variable}|\\$\{${variable}\}`, 'g'), process.env[variable]),
+export default function yamlLoader(filepath, content, environment) {
+    content = Object.keys(environment).reduce(
+        (content, variable) => content.replace(new RegExp(`\\$${variable}|\\$\{${variable}\}`, 'g'), environment[variable]),
         content
     );
 

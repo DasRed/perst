@@ -5,8 +5,14 @@ import Task from '../Task.js';
 import logger from '../logger.js';
 import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
 
-export default async function (cli) {
-    const config = await configFn(cli);
+/**
+ *
+ * @param {Object} cli
+ * @param {Object} environment
+ * @return {Promise<number>}
+ */
+export default async function (cli, environment) {
+    const config = await configFn(cli, environment);
     if (config.dryRun === true) {
         logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
     }

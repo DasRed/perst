@@ -5,8 +5,8 @@ import logger from './logger.js';
 import chalk from 'chalk';
 import yargsParser from 'yargs-parser';
 
-(async () => {
-    const cli = yargsParser(process.argv.slice(2), {
+(async function (args, environment) {
+    const cli = yargsParser(args.slice(2), {
         configuration: {
             'camel-case-expansion': true
         },
@@ -31,7 +31,7 @@ import yargsParser from 'yargs-parser';
             exitNumber = await version();
         }
         else {
-            exitNumber = await run(cli);
+            exitNumber = await run(cli, environment);
         }
     }
     catch (error) {
@@ -61,4 +61,4 @@ import yargsParser from 'yargs-parser';
     }
 
     process.exit(exitNumber !== undefined ? exitNumber : 0);
-})();
+})(process.argv, process.env);
