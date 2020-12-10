@@ -1,5 +1,6 @@
 import schema from '../schema.js';
 import unknownPropertyObject from '../unknownPropertyObject.js';
+import Variable from 'loader.io.api/dist/Tests/Variable.js';
 
 describe('schema.js', () => {
     const request = {
@@ -73,7 +74,9 @@ describe('schema.js', () => {
                         },
                         source:   {
                             type:     'string',
-                            required: true
+                            required: true,
+                            values:   [Variable.SOURCE.HEADER],
+                            default:  Variable.SOURCE.HEADER,
                         },
                     },
                 },

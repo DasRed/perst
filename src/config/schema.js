@@ -1,6 +1,7 @@
 import unknownPropertyObject from './unknownPropertyObject.js';
 import Test from 'loader.io.api/dist/Tests/Test.js';
 import Url from 'loader.io.api/dist/Tests/Url.js';
+import Variable from 'loader.io.api/dist/Tests/Variable.js';
 
 /**
  *
@@ -79,7 +80,9 @@ export default function (cli) {
                         },
                         source:   {
                             type:     'string',
-                            required: true
+                            required: true,
+                            values:   [Variable.SOURCE.HEADER],
+                            default:  Variable.SOURCE.HEADER
                         },
                     },
                 },
