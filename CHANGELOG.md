@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/DasRed/perst/compare/v1.2.0...v2.0.0) (2020-12-10)
+
+
+### Bug Fixes
+
+* fixing variable source values ([4498561](https://github.com/DasRed/perst/commit/4498561b1e482c3c4cad384bf64709d10c48fb1e))
+
+
+### Features
+
+* **#5:** resolve [#5](https://github.com/DasRed/perst/issues/5) Parameters from request should be an array with the keys name and value like variables ([f28eb7e](https://github.com/DasRed/perst/commit/f28eb7edcadc8e1dfc19797d0482033b500ceb58))
+* **#5:** resolve [#5](https://github.com/DasRed/perst/issues/5) Parameters from request should be an array with the keys name and value like variables ([d2f0680](https://github.com/DasRed/perst/commit/d2f0680d24f7c8c2700797e5f589cd49150879df))
+
+
+### BREAKING CHANGES
+
+* **#5:** config structure has changed
+
 # [1.2.0](https://github.com/DasRed/perst/compare/v1.1.1...v1.2.0) (2020-12-09)
 
 
