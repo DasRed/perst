@@ -16,6 +16,8 @@ Basic options:
 | --ci                    | Runs this on a CI                                                                         |
 | --dump-config \[FORMAT] | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
 | -f, --filter PATTERN    | filters the task by given regex. The name attribute will be used with the regex           |
+| --color                 | force the output with colors                                                              |
+| --no-color              | force the output without colors                                                           |
 
 # Configuration files
 
