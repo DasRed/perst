@@ -15,7 +15,10 @@ function requestToUrlOptions(domain, request) {
         request_type:     request.type,
         payload_file_url: request.payloadFile,
         headers:          request.headers,
-        request_params:   request.parameters,
+        request_params:   (request.parameters || []).reduce((acc, param) => {
+            acc[param.name] = param.value;
+            return acc;
+        }, {}),
         authentication:   request.authentication,
         variables:        request.variables,
     };

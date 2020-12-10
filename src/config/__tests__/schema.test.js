@@ -31,10 +31,22 @@ describe('schema.js', () => {
                 }
             },
             parameters:     {
-                type:     'object',
-                strict:   false,
-                minProps: 1,
+                type:     'array',
+                empty:    false,
                 optional: true,
+                items:    {
+                    type:  'object',
+                    props: {
+                        name:  {
+                            type:     'string',
+                            required: true
+                        },
+                        value: {
+                            type:     'string',
+                            required: true
+                        },
+                    },
+                },
             },
             authentication: {
                 type:     'object',

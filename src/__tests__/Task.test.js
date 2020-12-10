@@ -27,7 +27,10 @@ describe('Task', () => {
             type:           Url.TYPE.DELETE,
             payloadFile:    'file',
             headers:        {'lol': 'rofl'},
-            parameters:     {},
+            parameters:     [
+                {name: 'p1', value: 'v1'},
+                {name: 'p2', value: 'v2'},
+            ],
             authentication: {
                 login:    'login',
                 password: 'password',
@@ -109,7 +112,7 @@ describe('Task', () => {
             expect(param.urls[0].request_type).toBe(options.request.type);
             expect(param.urls[0].payload_file_url).toBe(options.request.payloadFile);
             expect(param.urls[0].headers).toBe(options.request.headers);
-            expect(param.urls[0].request_params).toBe(options.request.parameters);
+            expect(param.urls[0].request_params).toEqual({p1: 'v1', p2: 'v2'});
             expect(param.urls[0].authentication).toBe(options.request.authentication);
             expect(param.urls[0].variables).toBe(options.request.variables);
         });
@@ -151,7 +154,7 @@ describe('Task', () => {
             expect(test.urls[0].request_type).toBe(options.request.type);
             expect(test.urls[0].payload_file_url).toBe(options.request.payloadFile);
             expect(test.urls[0].headers).toBe(options.request.headers);
-            expect(test.urls[0].request_params).toBe(options.request.parameters);
+            expect(test.urls[0].request_params).toEqual({"p1": "v1", "p2": "v2"});
             expect(test.urls[0].authentication).toBeInstanceOf(Authentication);
             expect(test.urls[0].authentication.login).toBe(options.request.authentication.login);
             expect(test.urls[0].authentication.password).toBe(options.request.authentication.password);
@@ -209,7 +212,7 @@ describe('Task', () => {
                 expect(param.urls[0].request_type).toBe(options.request.type);
                 expect(param.urls[0].payload_file_url).toBe(options.request.payloadFile);
                 expect(param.urls[0].headers).toBe(options.request.headers);
-                expect(param.urls[0].request_params).toBe(options.request.parameters);
+                expect(param.urls[0].request_params).toEqual({"p1": "v1", "p2": "v2"});
                 expect(param.urls[0].authentication).toBe(options.request.authentication);
                 expect(param.urls[0].variables).toBe(options.request.variables);
                 expect(param.urls[1]).toBeInstanceOf(Object);
