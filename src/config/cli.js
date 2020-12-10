@@ -7,6 +7,7 @@ export default {
         d: 'dry-run',
         h: 'help',
         v: 'version',
+        f: 'filter',
     },
     boolean:       ['dryRun'],
     default:       {

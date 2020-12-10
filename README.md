@@ -9,12 +9,13 @@ Usage: perst [options]
 Basic options:
 | Switch                  | Description                                                                               |
 | ----------------------- | ----------------------------------------------------------------------------------------- |
-| -c, --config <filename> | Use this config file (if argument is used but value is unspecified, defaults to .perstrc) |
+| -c, --config FILENAME   | Use this config file (if argument is used but value is unspecified, defaults to .perstrc) |
 | -d, --dry-run           | Runs all test in dry-run mode                                                             |
 | -h, --help              | Show this help message                                                                    |
 | -v, --version           | Show version number                                                                       |
 | --ci                    | Runs this on a CI                                                                         |
-| --dump-config <format>  | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
+| --dump-config \[FORMAT] | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
+| -f, --filter REGEX      | filters the task by given regex. The name attribute will be used with the regex           |
 
 # Configuration files
 

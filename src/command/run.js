@@ -25,9 +25,17 @@ export default async function (config) {
         return 1;
     }
 
+    let tasks = Object.entries(config.tasks);
+
+    // should be some task be filtered?
+    if (config.filter) {
+        const filter = new RegExp(config.filter);
+        tasks        = tasks.filter(([name, options]) => options.name.match(filter));
+    }
+
     // make it to tasks
-    logger.log(`Found ${chalk.yellowBright(Object.values(config.tasks).length)} performance test to run.`);
-    const tasks = Object.entries(config.tasks).map(([name, options]) => new Task({
+    logger.log(`Found ${chalk.yellowBright(tasks.length)} performance test to run.`);
+    tasks = tasks.map(([name, options]) => new Task({
         loaderIO,
         name,
         options,

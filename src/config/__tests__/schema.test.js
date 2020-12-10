@@ -238,6 +238,11 @@ describe('schema.js', () => {
         const result = schema({});
 
         expect(result).toEqual({
+            filter:     {
+                type:     'string',
+                default:  undefined,
+                optional: true,
+            },
             dumpConfig: {
                 type:     'enum',
                 default:  undefined,
@@ -260,12 +265,18 @@ describe('schema.js', () => {
 
     test('with cli values', () => {
         const result = schema({
+            filter:     'narf',
             dryRun:     true,
             ci:         true,
             dumpConfig: 'yaml',
         });
 
         expect(result).toEqual({
+            filter:     {
+                type:     'string',
+                default:  'narf',
+                optional: true,
+            },
             dumpConfig: {
                 type:     'enum',
                 default:  'yaml',

@@ -43,7 +43,7 @@ export default function (cli) {
                 items:    {
                     type:  'object',
                     props: {
-                        name:     {
+                        name:  {
                             type:     'string',
                             required: true
                         },
@@ -116,6 +116,11 @@ export default function (cli) {
             type:     'enum',
             default:  cli.dumpConfig,
             values:   [true, 'yaml', 'yml', 'json', 'js'],
+            optional: true,
+        },
+        filter:     {
+            type:     'string',
+            default:  cli.filter,
             optional: true,
         },
         dryRun:     {

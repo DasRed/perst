@@ -14,6 +14,7 @@ describe('runs.js', () => {
     let nuffRunResult = Task.RESULT.SUCCESS;
 
     let config = {
+        filter: undefined,
         dryRun: true,
         ci:     true,
         api:    {
@@ -68,15 +69,39 @@ describe('runs.js', () => {
 
     beforeEach(() => {
         loaderIO          = undefined;
-        taskOptionsNuff   = {};
-        taskOptionsNarf   = {};
+        taskOptionsNuff   = {name: 'nuff'};
+        taskOptionsNarf   = {name: 'narf'};
         nuffRunResult     = Task.RESULT.SUCCESS;
+        config.filter     = undefined;
         config.dryRun     = true;
         config.tasks.nuff = taskOptionsNuff;
         config.tasks.narf = taskOptionsNarf;
     });
 
     describe('success', () => {
+        test('with filter', async () => {
+            config.filter = 'ff$';
+
+            const taskRunSpy = jest.spyOn(Task.prototype, 'run')
+                                   .mockImplementationOnce(nuffRun)
+                                   .mockImplementationOnce(narfRun);
+
+            const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
+
+            validateDomain.mockResolvedValue(true);
+
+            expect(await run(config)).toBe(0);
+
+            expect(loggerLogSpy).toHaveBeenCalledTimes(3);
+            expect(loggerLogSpy).toHaveBeenNthCalledWith(1, "\u001b[33mNote: You running perst in dry run mode. No test will be executed. No test will be created.\u001b[39m");
+            expect(loggerLogSpy).toHaveBeenNthCalledWith(2, "Using domain \u001b[32mhttps://www.nuff.narf\u001b[39m");
+            expect(loggerLogSpy).toHaveBeenNthCalledWith(3, "Found \u001b[93m1\u001b[39m performance test to run.");
+
+            expect(validateDomain).toHaveBeenCalledWith(loaderIO, config);
+
+            expect(taskRunSpy).toHaveBeenCalledTimes(1);
+        });
+
         test('with dryRun', async () => {
             const taskRunSpy = jest.spyOn(Task.prototype, 'run')
                                    .mockImplementationOnce(nuffRun)
@@ -120,6 +145,7 @@ describe('runs.js', () => {
             expect(taskRunSpy).toHaveBeenCalledTimes(2);
         });
     });
+
     describe('failed', () => {
         describe('by Task', () => {
             test('with dryRun', async () => {
@@ -168,6 +194,7 @@ describe('runs.js', () => {
                 expect(taskRunSpy).toHaveBeenCalledTimes(2);
             });
         });
+
         describe('by domain validation', () => {
             test('with dryRun', async () => {
                 nuffRunResult = Task.RESULT.FAILED;
