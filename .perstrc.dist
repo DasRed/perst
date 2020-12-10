@@ -39,7 +39,10 @@ tasks:
             headers: # default are following values
                 accept-encoding: gzip
             parameters: # default is null --> request_params
-                parameter1: value of parameter 1
+                - name: parameter 1
+                  value: value of parameter 1
+                - name: parameter 2
+                  value: value of parameter 2
             authentication: # default is null
                 type: basic # is default
                 login: login # required if authentication is defined
