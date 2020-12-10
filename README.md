@@ -15,7 +15,7 @@ Basic options:
 | -v, --version           | Show version number                                                                       |
 | --ci                    | Runs this on a CI                                                                         |
 | --dump-config \[FORMAT] | dumps the config to the stdout in given format (yaml, yml, json, js). Default: yaml       |
-| -f, --filter REGEX      | filters the task by given regex. The name attribute will be used with the regex           |
+| -f, --filter PATTERN    | filters the task by given regex. The name attribute will be used with the regex           |
 
 # Configuration files
 
