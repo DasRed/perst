@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/DasRed/perst/compare/v2.2.0...v2.2.1) (2020-12-11)
+
+
+### Bug Fixes
+
+* update loader.io.api version ([662a29e](https://github.com/DasRed/perst/commit/662a29e7c837b902bc1ea23627affe8384d65bd8))
+
 # [2.2.0](https://github.com/DasRed/perst/compare/v2.1.0...v2.2.0) (2020-12-11)
 
 
