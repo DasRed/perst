@@ -1,3 +1,12 @@
+# [2.2.0](https://github.com/DasRed/perst/compare/v2.1.0...v2.2.0) (2020-12-11)
+
+
+### Features
+
+* **#10:** resolve [#10](https://github.com/DasRed/perst/issues/10) : add cli option '--stop-on-failure' ([b6c9c6b](https://github.com/DasRed/perst/commit/b6c9c6ba5c604890f245525cb17a46564393584d))
+* **#8:** resolve [#8](https://github.com/DasRed/perst/issues/8) list all tasks which are available ([eefb5ef](https://github.com/DasRed/perst/commit/eefb5ef60acb7a1b174d4c2c79882659d9f3b0ef))
+* **#9:** resolve [#9](https://github.com/DasRed/perst/issues/9) : add cli option `--silent` ([dd6bc24](https://github.com/DasRed/perst/commit/dd6bc245db6598a4219ccd9d43f75ec2a1fba5d7))
+
 # [2.1.0](https://github.com/DasRed/perst/compare/v2.0.0...v2.1.0) (2020-12-11)
 
 
