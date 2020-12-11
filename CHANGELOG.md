@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/DasRed/perst/compare/v2.0.0...v2.1.0) (2020-12-11)
+
+
+### Features
+
+* **#6:** resolve [#6](https://github.com/DasRed/perst/issues/6) : cli parameter (regex) which filters the test, which should be executed ([05ba082](https://github.com/DasRed/perst/commit/05ba082fd9b8ee79305cfe84aeb1656009c804bc))
+* **#6:** resolve [#6](https://github.com/DasRed/perst/issues/6) : cli parameter (regex) which filters the test, which should be executed ([ae06902](https://github.com/DasRed/perst/commit/ae06902a2e1ead39d044c84d20ae278b188c3acc))
+* **#7:** resolve [#7](https://github.com/DasRed/perst/issues/7) : adding color and no-color options to ([6818e7d](https://github.com/DasRed/perst/commit/6818e7dcca6ef17149887c205115a2ef3091744e))
+
 # [2.0.0](https://github.com/DasRed/perst/compare/v1.2.0...v2.0.0) (2020-12-10)
 
 
