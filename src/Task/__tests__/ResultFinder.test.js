@@ -4,7 +4,7 @@ import Test from 'loader.io.api/dist/Tests/Test.js';
 import Result from 'loader.io.api/dist/Tests/Result.js';
 
 describe('ResultFinder', () => {
-    const loaderIO = new LoaderIO({token: 'a'});
+    const loaderIO = new LoaderIO('a');
 
     describe('.constructor()', () => {
         test('with default', () => {

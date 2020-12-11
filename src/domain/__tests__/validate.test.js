@@ -4,7 +4,7 @@ import validate from '../validate.js';
 import logger from '../../logger.js';
 
 describe('validate.js', () => {
-    const loaderIO = new LoaderIO({token: 'a'});
+    const loaderIO = new LoaderIO('a');
 
     describe('application found', () => {
         test.each([

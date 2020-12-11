@@ -5,7 +5,7 @@ import logger from '../../logger.js';
 
 describe('Output', () => {
     test('.constructor()', () => {
-        const loaderIO = new LoaderIO({token: 'a'});
+        const loaderIO = new LoaderIO('a');
         const task     = new Task(loaderIO, 'nuff', {}, {});
         const output   = new Output(task, true);
 
@@ -18,7 +18,7 @@ describe('Output', () => {
     test('.alreadyFinished()', () => {
         const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
-        const loaderIO = new LoaderIO({token: 'a'});
+        const loaderIO = new LoaderIO('a');
         const task     = new Task(loaderIO, 'narf', {}, {});
         const output   = new Output(task, true);
 
@@ -34,7 +34,7 @@ describe('Output', () => {
             const timestampBefore = (new Date()).getTime();
             const loggerLogSpy    = jest.spyOn(logger, 'log').mockReturnThis();
 
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
             const task     = new Task(loaderIO, 'narf', {}, {});
             const output   = new Output(task, false);
 
@@ -59,7 +59,7 @@ describe('Output', () => {
             const timestampBefore = (new Date()).getTime();
             const loggerLogSpy    = jest.spyOn(logger, 'log').mockReturnThis();
 
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
             const task     = new Task(loaderIO, 'narf', {}, {});
             const output   = new Output(task, true);
 
@@ -86,7 +86,7 @@ describe('Output', () => {
 
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
-                const loaderIO              = new LoaderIO({token: 'a'});
+                const loaderIO              = new LoaderIO('a');
                 const options               = {
                     threshold: {
                         avgResponseTime: 42,
@@ -117,7 +117,7 @@ describe('Output', () => {
 
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
-                const loaderIO              = new LoaderIO({token: 'a'});
+                const loaderIO              = new LoaderIO('a');
                 const options               = {
                     threshold: {
                         avgResponseTime: 42,
@@ -150,7 +150,7 @@ describe('Output', () => {
 
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
-                const loaderIO              = new LoaderIO({token: 'a'});
+                const loaderIO              = new LoaderIO('a');
                 const options               = {
                     threshold: {
                         avgResponseTime: 42,
@@ -181,7 +181,7 @@ describe('Output', () => {
 
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
-                const loaderIO              = new LoaderIO({token: 'a'});
+                const loaderIO              = new LoaderIO('a');
                 const options               = {
                     threshold: {
                         avgResponseTime: 42,

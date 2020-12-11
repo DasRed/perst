@@ -52,7 +52,7 @@ describe('Task', () => {
 
     test('.constructor()', () => {
         const config   = {};
-        const loaderIO = new LoaderIO({token: 'a'});
+        const loaderIO = new LoaderIO('a');
 
         const task = new Task(loaderIO, 'b', options, config);
 
@@ -81,7 +81,7 @@ describe('Task', () => {
                 dryRun: false,
                 app:    {domain: 'https://www.example.de/'}
             };
-            const loaderIO  = new LoaderIO({token: 'a'});
+            const loaderIO  = new LoaderIO('a');
             const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
             const task = new Task(loaderIO, 'b', options, config);
@@ -121,7 +121,7 @@ describe('Task', () => {
                 dryRun: true,
                 app:    {domain: 'https://www.example.de/'}
             };
-            const loaderIO  = new LoaderIO({token: 'a'});
+            const loaderIO  = new LoaderIO('a');
             const createSpy = jest.spyOn(loaderIO.tests, 'create');
 
             const task = new Task(loaderIO, 'b', options, config);
@@ -171,7 +171,7 @@ describe('Task', () => {
                     dryRun: false,
                     app:    {domain: 'https://www.example.de/'}
                 };
-                const loaderIO  = new LoaderIO({token: 'a'});
+                const loaderIO  = new LoaderIO('a');
                 const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
                 const taskOptions = {
@@ -224,7 +224,7 @@ describe('Task', () => {
                     dryRun: false,
                     app:    {domain: 'https://www.example.de/'}
                 };
-                const loaderIO  = new LoaderIO({token: 'a'});
+                const loaderIO  = new LoaderIO('a');
                 const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
                 const taskOptions = {
@@ -272,7 +272,7 @@ describe('Task', () => {
                 dryRun: false,
                 app:    {domain: 'https://www.example.de/'}
             };
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
 
             const task = new Task(loaderIO, 'b', options, config);
 
@@ -291,7 +291,7 @@ describe('Task', () => {
                 dryRun: true,
                 app:    {domain: 'https://www.example.de/'}
             };
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
 
             const task = new Task(loaderIO, 'b', options, config);
 
@@ -313,7 +313,7 @@ describe('Task', () => {
             [200, 100, Task.RESULT.SUCCESS],
             [200, 101, Task.RESULT.FAILED],
         ])('#%#', (avgResponseTime, avgErrorRate, expectedResult) => {
-            const task = new Task(new LoaderIO({token: 'a'}), 'b', options, {app: {domain: 'https://www.example.de/'}});
+            const task = new Task(new LoaderIO('a'), 'b', options, {app: {domain: 'https://www.example.de/'}});
 
             task.values.avgResponseTime = avgResponseTime;
             task.values.avgErrorRate    = avgErrorRate;
@@ -334,7 +334,7 @@ describe('Task', () => {
                 app:    {domain: 'https://www.example.de/'}
             };
 
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
 
             const result = new Result({
                 avg_response_time: 42,
@@ -387,7 +387,7 @@ describe('Task', () => {
                 app:    {domain: 'https://www.example.de/'}
             };
 
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
 
             const result = new Result({
                 avg_response_time: 42,
@@ -437,7 +437,7 @@ describe('Task', () => {
                 app:    {domain: 'https://www.example.de/'}
             };
 
-            const loaderIO = new LoaderIO({token: 'a'});
+            const loaderIO = new LoaderIO('a');
 
             const task  = new Task(loaderIO, 'b', options, config);
             task.status = Task.STATUS.FINISHED;

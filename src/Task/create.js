@@ -12,7 +12,7 @@ import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
 export default async function createTasks(config) {
     // using a async function around, because jest does not allow top level await for coverage
     logger.log(`Using domain ${chalk.green(config.app.domain)}`);
-    const loaderIO = new LoaderIO({...config.api});
+    const loaderIO = new LoaderIO(config.api.token, config.api.server, config.api.version);
 
     // validate app domain
     if (await validateDomain(loaderIO, config) === false) {
