@@ -28,8 +28,14 @@ describe('Task', () => {
             payloadFile:    'file',
             headers:        {'lol': 'rofl'},
             parameters:     [
-                {name: 'p1', value: 'v1'},
-                {name: 'p2', value: 'v2'},
+                {
+                    name:  'p1',
+                    value: 'v1'
+                },
+                {
+                    name:  'p2',
+                    value: 'v2'
+                },
             ],
             authentication: {
                 login:    'login',
@@ -48,12 +54,7 @@ describe('Task', () => {
         const config   = {};
         const loaderIO = new LoaderIO({token: 'a'});
 
-        const task = new Task({
-            loaderIO,
-            name: 'b',
-            options,
-            config
-        });
+        const task = new Task(loaderIO, 'b', options, config);
 
         expect(task.loaderIO).toBe(loaderIO);
         expect(task.name).toBe('b');
@@ -83,12 +84,7 @@ describe('Task', () => {
             const loaderIO  = new LoaderIO({token: 'a'});
             const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
 
             expect(await task.createAndRun()).toBe(test);
             expect(createSpy).toHaveBeenCalledTimes(1);
@@ -112,7 +108,10 @@ describe('Task', () => {
             expect(param.urls[0].request_type).toBe(options.request.type);
             expect(param.urls[0].payload_file_url).toBe(options.request.payloadFile);
             expect(param.urls[0].headers).toBe(options.request.headers);
-            expect(param.urls[0].request_params).toEqual({p1: 'v1', p2: 'v2'});
+            expect(param.urls[0].request_params).toEqual({
+                p1: 'v1',
+                p2: 'v2'
+            });
             expect(param.urls[0].authentication).toBe(options.request.authentication);
             expect(param.urls[0].variables).toBe(options.request.variables);
         });
@@ -125,12 +124,7 @@ describe('Task', () => {
             const loaderIO  = new LoaderIO({token: 'a'});
             const createSpy = jest.spyOn(loaderIO.tests, 'create');
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
             const test = await task.createAndRun();
             expect(test).toBeInstanceOf(Test);
             expect(createSpy).toHaveBeenCalledTimes(0);
@@ -154,7 +148,10 @@ describe('Task', () => {
             expect(test.urls[0].request_type).toBe(options.request.type);
             expect(test.urls[0].payload_file_url).toBe(options.request.payloadFile);
             expect(test.urls[0].headers).toBe(options.request.headers);
-            expect(test.urls[0].request_params).toEqual({"p1": "v1", "p2": "v2"});
+            expect(test.urls[0].request_params).toEqual({
+                "p1": "v1",
+                "p2": "v2"
+            });
             expect(test.urls[0].authentication).toBeInstanceOf(Authentication);
             expect(test.urls[0].authentication.login).toBe(options.request.authentication.login);
             expect(test.urls[0].authentication.password).toBe(options.request.authentication.password);
@@ -177,18 +174,14 @@ describe('Task', () => {
                 const loaderIO  = new LoaderIO({token: 'a'});
                 const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
-                const task = new Task({
-                    loaderIO,
-                    name:    'b',
-                    options: {
-                        ...options,
-                        requests: [
-                            {path: '/lol'},
-                            {path: '/narf'}
-                        ]
-                    },
-                    config
-                });
+                const taskOptions = {
+                    ...options,
+                    requests: [
+                        {path: '/lol'},
+                        {path: '/narf'}
+                    ]
+                };
+                const task    = new Task(loaderIO, 'b', taskOptions, config);
 
                 expect(await task.createAndRun()).toBe(test);
                 expect(createSpy).toHaveBeenCalledTimes(1);
@@ -212,7 +205,10 @@ describe('Task', () => {
                 expect(param.urls[0].request_type).toBe(options.request.type);
                 expect(param.urls[0].payload_file_url).toBe(options.request.payloadFile);
                 expect(param.urls[0].headers).toBe(options.request.headers);
-                expect(param.urls[0].request_params).toEqual({"p1": "v1", "p2": "v2"});
+                expect(param.urls[0].request_params).toEqual({
+                    "p1": "v1",
+                    "p2": "v2"
+                });
                 expect(param.urls[0].authentication).toBe(options.request.authentication);
                 expect(param.urls[0].variables).toBe(options.request.variables);
                 expect(param.urls[1]).toBeInstanceOf(Object);
@@ -231,19 +227,15 @@ describe('Task', () => {
                 const loaderIO  = new LoaderIO({token: 'a'});
                 const createSpy = jest.spyOn(loaderIO.tests, 'create').mockResolvedValue(test);
 
-                const task = new Task({
-                    loaderIO,
-                    name:    'b',
-                    options: {
-                        ...options,
-                        request: undefined,
-                        requests: [
-                            {path: '/lol'},
-                            {path: '/narf'}
-                        ]
-                    },
-                    config
-                });
+                const taskOptions = {
+                    ...options,
+                    request:  undefined,
+                    requests: [
+                        {path: '/lol'},
+                        {path: '/narf'}
+                    ]
+                };
+                const task    = new Task(loaderIO, 'b', taskOptions, config);
 
                 expect(await task.createAndRun()).toBe(test);
                 expect(createSpy).toHaveBeenCalledTimes(1);
@@ -282,12 +274,7 @@ describe('Task', () => {
             };
             const loaderIO = new LoaderIO({token: 'a'});
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
 
             const result = await task.rerun(test);
 
@@ -306,12 +293,7 @@ describe('Task', () => {
             };
             const loaderIO = new LoaderIO({token: 'a'});
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
 
             const result = await task.rerun(test);
 
@@ -331,12 +313,7 @@ describe('Task', () => {
             [200, 100, Task.RESULT.SUCCESS],
             [200, 101, Task.RESULT.FAILED],
         ])('#%#', (avgResponseTime, avgErrorRate, expectedResult) => {
-            const task = new Task({
-                loaderIO: new LoaderIO({token: 'a'}),
-                name:     'b',
-                options,
-                config:   {app: {domain: 'https://www.example.de/'}}
-            });
+            const task = new Task(new LoaderIO({token: 'a'}), 'b', options, {app: {domain: 'https://www.example.de/'}});
 
             task.values.avgResponseTime = avgResponseTime;
             task.values.avgErrorRate    = avgErrorRate;
@@ -364,12 +341,7 @@ describe('Task', () => {
                 avg_error_rate:    22
             });
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
 
             const outputAlreadyFinishedSpy = jest.spyOn(task.output, 'alreadyFinished').mockReturnThis();
             const outputStartSpy           = jest.spyOn(task.output, 'start').mockReturnThis();
@@ -422,12 +394,7 @@ describe('Task', () => {
                 avg_error_rate:    22
             });
 
-            const task = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task = new Task(loaderIO, 'b', options, config);
 
             const outputAlreadyFinishedSpy = jest.spyOn(task.output, 'alreadyFinished').mockReturnThis();
             const outputStartSpy           = jest.spyOn(task.output, 'start').mockReturnThis();
@@ -472,12 +439,7 @@ describe('Task', () => {
 
             const loaderIO = new LoaderIO({token: 'a'});
 
-            const task  = new Task({
-                loaderIO,
-                name: 'b',
-                options,
-                config
-            });
+            const task  = new Task(loaderIO, 'b', options, config);
             task.status = Task.STATUS.FINISHED;
 
             const outputAlreadyFinishedSpy = jest.spyOn(task.output, 'alreadyFinished').mockReturnThis();

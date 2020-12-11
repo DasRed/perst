@@ -6,10 +6,7 @@ import logger from '../../logger.js';
 describe('Output', () => {
     test('.constructor()', () => {
         const loaderIO = new LoaderIO({token: 'a'});
-        const task     = new Task({
-            loaderIO,
-            config: {}
-        });
+        const task     = new Task(loaderIO, 'nuff', {}, {});
         const output   = new Output(task, true);
 
         expect(output.task).toBe(task);
@@ -22,11 +19,7 @@ describe('Output', () => {
         const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
         const loaderIO = new LoaderIO({token: 'a'});
-        const task     = new Task({
-            loaderIO,
-            name:   'narf',
-            config: {}
-        });
+        const task     = new Task(loaderIO, 'narf', {}, {});
         const output   = new Output(task, true);
 
         expect(output.alreadyFinished()).toBe(output);
@@ -42,11 +35,7 @@ describe('Output', () => {
             const loggerLogSpy    = jest.spyOn(logger, 'log').mockReturnThis();
 
             const loaderIO = new LoaderIO({token: 'a'});
-            const task     = new Task({
-                loaderIO,
-                name:   'narf',
-                config: {}
-            });
+            const task     = new Task(loaderIO, 'narf', {}, {});
             const output   = new Output(task, false);
 
             expect(output.start()).toBe(output);
@@ -60,7 +49,7 @@ describe('Output', () => {
             const intervalCallbackFunction = setInterval.mock.calls[0][0];
             intervalCallbackFunction();
             expect(loggerLogSpy).toHaveBeenCalledTimes(2);
-            expect(loggerLogSpy).toHaveBeenNthCalledWith(2, expect.stringMatching(/^\r\u001b\[33m•\u001b\[39m Task \u001b\[32mnarf\u001b\[39m \([0-9]ms\)\s.*?$/), false);
+            expect(loggerLogSpy).toHaveBeenNthCalledWith(2, expect.stringMatching(/^\r\u001b\[33m•\u001b\[39m Task \u001b\[32mnarf\u001b\[39m \([0-9]{1,2}ms\)\s.*?$/), false);
         });
 
         test('isCI = true', () => {
@@ -71,11 +60,7 @@ describe('Output', () => {
             const loggerLogSpy    = jest.spyOn(logger, 'log').mockReturnThis();
 
             const loaderIO = new LoaderIO({token: 'a'});
-            const task     = new Task({
-                loaderIO,
-                name:   'narf',
-                config: {}
-            });
+            const task     = new Task(loaderIO, 'narf', {}, {});
             const output   = new Output(task, true);
 
             expect(output.start()).toBe(output);
@@ -102,17 +87,13 @@ describe('Output', () => {
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
                 const loaderIO              = new LoaderIO({token: 'a'});
-                const task                  = new Task({
-                    loaderIO,
-                    name:    'narf',
-                    config:  {},
-                    options: {
-                        threshold: {
-                            avgResponseTime: 42,
-                            avgErrorRate:    22,
-                        }
+                const options               = {
+                    threshold: {
+                        avgResponseTime: 42,
+                        avgErrorRate:    22,
                     }
-                });
+                };
+                const task                  = new Task(loaderIO, 'narf', options, {});
                 task.result                 = Task.RESULT.FAILED;
                 task.values.avgResponseTime = 16;
                 task.values.avgErrorRate    = 19;
@@ -137,17 +118,13 @@ describe('Output', () => {
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
                 const loaderIO              = new LoaderIO({token: 'a'});
-                const task                  = new Task({
-                    loaderIO,
-                    name:    'narf',
-                    config:  {},
-                    options: {
-                        threshold: {
-                            avgResponseTime: 42,
-                            avgErrorRate:    22,
-                        }
+                const options               = {
+                    threshold: {
+                        avgResponseTime: 42,
+                        avgErrorRate:    22,
                     }
-                });
+                };
+                const task                  = new Task(loaderIO, 'narf', options, {});
                 task.result                 = Task.RESULT.SUCCESS;
                 task.values.avgResponseTime = 16;
                 task.values.avgErrorRate    = 19;
@@ -174,17 +151,13 @@ describe('Output', () => {
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
                 const loaderIO              = new LoaderIO({token: 'a'});
-                const task                  = new Task({
-                    loaderIO,
-                    name:    'narf',
-                    config:  {},
-                    options: {
-                        threshold: {
-                            avgResponseTime: 42,
-                            avgErrorRate:    22,
-                        }
+                const options               = {
+                    threshold: {
+                        avgResponseTime: 42,
+                        avgErrorRate:    22,
                     }
-                });
+                };
+                const task                  = new Task(loaderIO, 'narf', options, {});
                 task.result                 = Task.RESULT.FAILED;
                 task.values.avgResponseTime = 16;
                 task.values.avgErrorRate    = 19;
@@ -209,17 +182,13 @@ describe('Output', () => {
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
                 const loaderIO              = new LoaderIO({token: 'a'});
-                const task                  = new Task({
-                    loaderIO,
-                    name:    'narf',
-                    config:  {},
-                    options: {
-                        threshold: {
-                            avgResponseTime: 42,
-                            avgErrorRate:    22,
-                        }
+                const options               = {
+                    threshold: {
+                        avgResponseTime: 42,
+                        avgErrorRate:    22,
                     }
-                });
+                };
+                const task                  = new Task(loaderIO, 'narf', options, {});
                 task.result                 = Task.RESULT.SUCCESS;
                 task.values.avgResponseTime = 16;
                 task.values.avgErrorRate    = 19;

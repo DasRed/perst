@@ -44,12 +44,7 @@ export default class Task {
      * @param {Object} options
      * @param {Object} config
      */
-    constructor({
-                    loaderIO,
-                    name,
-                    options,
-                    config,
-                }) {
+    constructor(loaderIO, name, options, config) {
         this.loaderIO = loaderIO;
         this.name     = name;
         this.options  = options;

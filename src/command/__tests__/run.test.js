@@ -6,17 +6,9 @@ jest.mock('../../domain/validate.js');
 
 describe('runs.js', () => {
     test('success', async () => {
-        const taskA  = new Task({
-            name: 'nuff',
-            options: {},
-            config: {}
-        });
+        const taskA  = new Task({}, 'nuff', {}, {});
         taskA.result = Task.RESULT.SUCCESS;
-        const taskB  = new Task({
-            name:    'nuff',
-            options: {},
-            config:  {}
-        });
+        const taskB  = new Task({}, 'nuff', {}, {});
         taskB.result = Task.RESULT.SUCCESS;
 
         const taskARunSpy = jest.spyOn(taskA, 'run').mockResolvedValue(taskA);
@@ -29,17 +21,9 @@ describe('runs.js', () => {
     });
 
     test('failed', async () => {
-        const taskA  = new Task({
-            name: 'nuff',
-            options: {},
-            config: {}
-        });
+        const taskA  = new Task({}, 'nuff', {}, {});
         taskA.result = Task.RESULT.SUCCESS;
-        const taskB  = new Task({
-            name:    'nuff',
-            options: {},
-            config:  {}
-        });
+        const taskB  = new Task({}, 'nuff', {}, {});
         taskB.result = Task.RESULT.FAILED;
 
         const taskARunSpy = jest.spyOn(taskA, 'run').mockResolvedValue(taskA);

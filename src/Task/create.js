@@ -28,10 +28,5 @@ export default async function createTasks(config) {
     }
 
     // make it to tasks
-    return tasks.map(([name, options]) => new Task({
-        loaderIO,
-        name,
-        options,
-        config,
-    }));
+    return tasks.map(([name, options]) => new Task(loaderIO, name, options, config));
 };
