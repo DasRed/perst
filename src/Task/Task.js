@@ -1,7 +1,7 @@
 import random from 'random';
 import Test from 'loader.io.api/dist/Tests/Test.js';
 import ResultFinder from './ResultFinder.js';
-import Output from './Task/Output.js';
+import Output from './Output.js';
 
 /**
  *

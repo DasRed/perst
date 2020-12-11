@@ -1,7 +1,7 @@
-import Output from '../Task/Output.js';
+import Output from '../Output.js';
 import Task from '../Task.js';
 import LoaderIO from 'loader.io.api/dist/LoaderIO.js';
-import logger from '../logger.js';
+import logger from '../../logger.js';
 
 describe('Output', () => {
     test('.constructor()', () => {

@@ -5,7 +5,7 @@ import Result from 'loader.io.api/dist/Tests/Result.js';
 import Authentication from 'loader.io.api/dist/Tests/Authentication.js';
 import Variable from 'loader.io.api/dist/Tests/Variable.js';
 import Task from '../Task.js';
-import Output from '../Task/Output.js';
+import Output from '../Output.js';
 import ResultFinder from '../ResultFinder.js';
 
 describe('Task', () => {

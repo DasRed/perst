@@ -4,6 +4,7 @@ import logger from './logger.js';
 import configFn from './config/index.js';
 import cliConfig from './config/cli.js';
 import * as commands from './command/index.js';
+import createTasks from './Task/create.js';
 
 /**
  *
@@ -11,13 +12,18 @@ import * as commands from './command/index.js';
  * @param {Object} environment
  * @return {Promise<void>}
  */
-export default async function (args, environment) {
-    const cli = yargsParser(args, cliConfig);
-
+export default async function execute(args, environment) {
     let exitNumber;
     try {
+        const cli    = yargsParser(args, cliConfig);
         const config = await configFn(cli, environment);
-        let command  = commands.run;
+        if (config.dryRun === true) {
+            logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
+        }
+
+        const tasks = await createTasks(config);
+
+        let command = commands.run;
 
         if (cli.help) {
             command = commands.help;
@@ -29,7 +35,7 @@ export default async function (args, environment) {
             command = commands.dumpConfig;
         }
 
-        exitNumber = await command(config);
+        exitNumber = await command(config, tasks);
     }
     catch (error) {
         exitNumber = 1;

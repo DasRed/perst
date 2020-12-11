@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import logger from '../logger.js';
 import prettyMilliseconds from 'pretty-ms';
-import Task from '../Task.js';
+import Task from './Task.js';
 
 function formatMS(start, end = (new Date()).getTime()) {
     return prettyMilliseconds(end - start, {formatSubMilliseconds: true});

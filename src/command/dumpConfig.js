@@ -6,7 +6,7 @@ import logger from '../logger.js';
  * @param {Object} config
  * @return {Promise<number>}
  */
-export default async function (config) {
+export default async function dumpConfig(config) {
     const format = config.dumpConfig;
     delete config.dumpConfig;
 
