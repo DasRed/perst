@@ -18,6 +18,7 @@ Basic options:
 | -f, --filter PATTERN    | filters the task by given regex. The name attribute will be used with the regex           |
 | --color                 | force the output with colors                                                              |
 | --no-color              | force the output without colors                                                           |
+| --list-tasks            | lists all available tasks                                                                 |
 
 # Configuration files
 
