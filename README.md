@@ -20,6 +20,7 @@ Basic options:
 | --no-color              | force the output without colors                                                           |
 | --list-tasks            | lists all available tasks                                                                 |
 | -s, --silent            | silent mode                                                                               |
+| --stop-on-failure       | stops the tasks execution, if a task fails                                                |
 
 # Configuration files
 

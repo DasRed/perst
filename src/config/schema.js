@@ -103,8 +103,8 @@ export default function (cli) {
     };
 
     return {
-        $$strict:   'remove',
-        version:    {
+        $$strict:      'remove',
+        version:       {
             type:     'number',
             required: true,
             default:  1,
@@ -112,28 +112,33 @@ export default function (cli) {
             max:      1,
             integer:  true,
         },
-        dumpConfig: {
+        dumpConfig:    {
             type:     'enum',
             default:  cli.dumpConfig,
             values:   [true, 'yaml', 'yml', 'json', 'js'],
             optional: true,
         },
-        filter:     {
+        stopOnFailure: {
+            type:     'boolean',
+            required: true,
+            default:  cli.stopOnFailure || false,
+        },
+        filter:        {
             type:     'string',
             default:  cli.filter,
             optional: true,
         },
-        dryRun:     {
+        dryRun:        {
             type:     'boolean',
             required: true,
             default:  cli.dryRun || false,
         },
-        ci:         {
+        ci:            {
             type:     'boolean',
             required: true,
             default:  cli.ci || false,
         },
-        api:        {
+        api:           {
             type:   'object',
             strict: 'remove',
             props:  {
@@ -155,7 +160,7 @@ export default function (cli) {
                 }
             }
         },
-        app:        {
+        app:           {
             type:   'object',
             strict: 'remove',
             props:  {
@@ -165,7 +170,7 @@ export default function (cli) {
                 }
             }
         },
-        tasks:      {
+        tasks:         {
             type:     'custom',
             check:    unknownPropertyObject,
             minProps: 1,

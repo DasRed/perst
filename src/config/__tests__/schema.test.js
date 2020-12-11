@@ -238,23 +238,28 @@ describe('schema.js', () => {
         const result = schema({});
 
         expect(result).toEqual({
-            filter:     {
+            filter:        {
                 type:     'string',
                 default:  undefined,
                 optional: true,
             },
-            dumpConfig: {
+            dumpConfig:    {
                 type:     'enum',
                 default:  undefined,
                 values:   [true, 'yaml', 'yml', 'json', 'js'],
                 optional: true,
             },
-            dryRun:     {
+            stopOnFailure: {
                 type:     'boolean',
                 required: true,
                 default:  false,
             },
-            ci:         {
+            dryRun:        {
+                type:     'boolean',
+                required: true,
+                default:  false,
+            },
+            ci:            {
                 type:     'boolean',
                 required: true,
                 default:  false,
@@ -265,30 +270,36 @@ describe('schema.js', () => {
 
     test('with cli values', () => {
         const result = schema({
-            filter:     'narf',
-            dryRun:     true,
-            ci:         true,
-            dumpConfig: 'yaml',
+            filter:        'narf',
+            stopOnFailure: true,
+            dryRun:        true,
+            ci:            true,
+            dumpConfig:    'yaml',
         });
 
         expect(result).toEqual({
-            filter:     {
+            filter:        {
                 type:     'string',
                 default:  'narf',
                 optional: true,
             },
-            dumpConfig: {
+            dumpConfig:    {
                 type:     'enum',
                 default:  'yaml',
                 values:   [true, 'yaml', 'yml', 'json', 'js'],
                 optional: true,
             },
-            dryRun:     {
+            stopOnFailure: {
                 type:     'boolean',
                 required: true,
                 default:  true,
             },
-            ci:         {
+            dryRun:        {
+                type:     'boolean',
+                required: true,
+                default:  true,
+            },
+            ci:            {
                 type:     'boolean',
                 required: true,
                 default:  true,
