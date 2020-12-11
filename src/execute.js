@@ -3,7 +3,7 @@ import yargsParser from 'yargs-parser';
 import logger from './logger.js';
 import configFn from './config/index.js';
 import cliConfig from './config/cli.js';
-import * as commands from './command/index.js';
+import Commands from './command/index.js';
 import createTasks from './Task/create.js';
 
 /**
@@ -23,17 +23,8 @@ export default async function execute(args, environment) {
 
         const tasks = await createTasks(config);
 
-        let command = commands.run;
-
-        if (cli.help) {
-            command = commands.help;
-        }
-        else if (cli.version) {
-            command = commands.version;
-        }
-        else if (cli.dumpConfig) {
-            command = commands.dumpConfig;
-        }
+        // find the correct command or use the default command
+        let [,command = Commands.run] = Object.entries(Commands).find(([name]) => cli[name]) || [];
 
         exitNumber = await command(config, tasks);
     }

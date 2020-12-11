@@ -7,7 +7,7 @@ import cliConfig from '../config/cli.js';
 import logger from '../logger.js';
 /** @type {SpyInstance<ReturnType<Required<T>[M]>, ArgsType<Required<T>[M]>>} */
 import createTasks from '../Task/create.js';
-import * as commands from '../command/index.js';
+import Commands from '../command/index.js';
 
 jest.mock('yargs-parser');
 jest.mock('../config/index.js');
@@ -16,6 +16,7 @@ jest.mock('../command/help.js');
 jest.mock('../command/version.js');
 jest.mock('../command/dumpConfig.js');
 jest.mock('../command/run.js');
+jest.mock('../command/listTasks.js');
 
 describe('index.js', () => {
     let processExitSpy;
@@ -25,13 +26,14 @@ describe('index.js', () => {
         processExitSpy = jest.spyOn(process, 'exit').mockReturnThis();
         yargsParser.mockClear();
         createTasks.mockClear();
-        Object.values(commands).forEach((command) => command.mockClear());
+        Object.values(Commands).forEach((command) => command.mockClear());
     });
 
     describe.each([
         ['help', {help: true}],
         ['version', {version: true}],
         ['dumpConfig', {dumpConfig: true}],
+        ['listTasks', {listTasks: true}],
         ['run', {}],
     ])('%s', (name, cli) => {
         let environment = {};
@@ -47,17 +49,17 @@ describe('index.js', () => {
         ])('success #%#', (result, expected) => {
             test('without dryRun', async () => {
                 configValue.dryRun = false;
-                
+
                 const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
                 configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 createTasks.mockResolvedValue(tasks);
-                commands[name].mockResolvedValue(result);
+                Commands[name].mockResolvedValue(result);
 
                 await execute(args, environment);
 
-                Object.entries(commands).forEach(([command, spy]) => {
+                Object.entries(Commands).forEach(([command, spy]) => {
                     if (command === name) {
                         expect(spy).toHaveBeenCalledWith(configValue, tasks);
                     }
@@ -82,11 +84,11 @@ describe('index.js', () => {
                 configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 createTasks.mockResolvedValue(tasks);
-                commands[name].mockResolvedValue(result);
+                Commands[name].mockResolvedValue(result);
 
                 await execute(args, environment);
 
-                Object.entries(commands).forEach(([command, spy]) => {
+                Object.entries(Commands).forEach(([command, spy]) => {
                     if (command === name) {
                         expect(spy).toHaveBeenCalledWith(configValue, tasks);
                     }
@@ -114,11 +116,11 @@ describe('index.js', () => {
                 configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 createTasks.mockResolvedValue(tasks);
-                commands[name].mockRejectedValue(error);
+                Commands[name].mockRejectedValue(error);
 
                 await execute(args, environment);
 
-                Object.entries(commands).forEach(([command, spy]) => {
+                Object.entries(Commands).forEach(([command, spy]) => {
                     if (command === name) {
                         expect(spy).toHaveBeenCalledWith(configValue, tasks);
                     }
@@ -148,11 +150,11 @@ describe('index.js', () => {
                 configFn.mockResolvedValue(configValue);
                 yargsParser.mockReturnValue(cli);
                 createTasks.mockResolvedValue(tasks);
-                commands[name].mockRejectedValue(error);
+                Commands[name].mockRejectedValue(error);
 
                 await execute(args, environment);
 
-                Object.entries(commands).forEach(([command, spy]) => {
+                Object.entries(Commands).forEach(([command, spy]) => {
                     if (command === name) {
                         expect(spy).toHaveBeenCalledWith(configValue, tasks);
                     }
