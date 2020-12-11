@@ -19,6 +19,7 @@ Basic options:
 | --color                 | force the output with colors                                                              |
 | --no-color              | force the output without colors                                                           |
 | --list-tasks            | lists all available tasks                                                                 |
+| -s, --silent            | silent mode                                                                               |
 
 # Configuration files
 

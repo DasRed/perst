@@ -15,7 +15,9 @@ import createTasks from './Task/create.js';
 export default async function execute(args, environment) {
     let exitNumber;
     try {
-        const cli    = yargsParser(args, cliConfig);
+        const cli = yargsParser(args, cliConfig);
+        logger.log.silent = !!cli.silent;
+
         const config = await configFn(cli, environment);
         if (config.dryRun === true) {
             logger.log(chalk.yellow('Note: You running perst in dry run mode. No test will be executed. No test will be created.'));
@@ -24,7 +26,7 @@ export default async function execute(args, environment) {
         const tasks = await createTasks(config);
 
         // find the correct command or use the default command
-        let [,command = Commands.run] = Object.entries(Commands).find(([name]) => cli[name]) || [];
+        let [, command = Commands.run] = Object.entries(Commands).find(([name]) => cli[name]) || [];
 
         exitNumber = await command(config, tasks);
     }

@@ -8,9 +8,11 @@ export default {
         h: 'help',
         v: 'version',
         f: 'filter',
+        s: 'silent',
     },
-    boolean:       ['dryRun'],
+    boolean:       ['dryRun', 'silent'],
     default:       {
-        dryRun: false
+        dryRun: false,
+        silent: false,
     }
 };
