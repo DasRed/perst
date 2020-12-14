@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/DasRed/perst/compare/v2.2.1...v2.3.0) (2020-12-14)
+
+
+### Features
+
+* **dump-config:** add syntax highlighting to config dump ([2a36751](https://github.com/DasRed/perst/commit/2a36751751134f6caa091fdb2e26419f6b67f2c3))
+
 ## [2.2.1](https://github.com/DasRed/perst/compare/v2.2.0...v2.2.1) (2020-12-11)
 
 
