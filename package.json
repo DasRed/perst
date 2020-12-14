@@ -34,6 +34,7 @@
     "homepage": "https://github.com/DasRed/perst#readme",
     "dependencies": {
         "chalk": "^4.1.0",
+        "cli-highlight": "^2.1.9",
         "cosmiconfig": "^7.0.0",
         "fastest-validator": "^1.9.0",
         "loader.io.api": "^2.0.0",
