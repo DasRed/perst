@@ -201,7 +201,7 @@ describe('schema.js', () => {
                     required: true,
                     default:  {
                         avgResponseTime: 500,
-                        avgErrorRate:    50
+                        avgErrorRate:    0
                     },
                     props:    {
                         avgResponseTime: {
@@ -214,7 +214,7 @@ describe('schema.js', () => {
                         avgErrorRate:    {
                             type:     'number',
                             required: true,
-                            default:  50,
+                            default:  0,
                             min:      0,
                             max:      100
                         },
