@@ -15,6 +15,11 @@ perst is a wrapper around LoaderIO, which can be configured and run in your comm
 	* [`app`](#app)
 		* [`api.domain`](#apidomain)
 	* [`tasks`](#tasks)
+		* [`tasks.[name].name`](#tasksnamename)
+		* [`tasks.[name].type`](#tasksnametype)
+			* [Task Type "Clients per test" `per-test`](#task-type-clients-per-test-per-test)
+			* [Task Type "Clients per second" `per-second`](#task-type-clients-per-second-per-second)
+			* [Task Type "Maintain client load" `maintain-load`](#task-type-maintain-client-load-maintain-load)
 * [Configuration Examples](#configuration-examples)
 	* [YAML](#yaml)
 	* [JSON](#json)
@@ -124,6 +129,45 @@ Defines every task which should be run. This is an object of tasks.
 
 - **Required:** true
 - **Type:** Object
+
+#### `tasks.[name].name`
+
+Defines the name of the task in loader IO. This name will be used to find an existing task to reuse and rerun them. If no task can be found with this name, the task will be created.
+
+- **Required:** true
+- **Type:** String
+
+#### `tasks.[name].type`
+
+Defines the test type for the task. The article [Test Types](https://support.loader.io/article/16-test-types) and [Understanding the different test types]
+(https://loader.io/blog/2014/07/16/understanding-different-test-types/) describe detailed information about the test type.
+
+- **Required:** false
+- **Type:** String
+- **Values:** per-test, per-second, maintain-load
+- **Default:** per-second
+
+##### Task Type "Clients per test" `per-test`
+With the "Clients per test" type, you specify the total number of clients to connect to your application over the duration of the test. 
+If you specify 20000 clients for a 20-second test, 1000 clients will connect each second during that test.
+
+![Clients per test](docs/per-test.png)
+
+##### Task Type "Clients per second" `per-second`
+The "Clients per second" type is similar to "Clients per test", but instead of specifying the total, you specify the number of clients to 
+start each second. A 20-second test with 1000 clients per second is the same as a 20-second test at 20000 clients per test.
+
+![Clients per second](docs/per-second.png)
+
+##### Task Type "Maintain client load" `maintain-load`
+This test allows you to specify a _from_ and a _to_ value for clients. If you specify 0 and 10000 here for example, the test will start with 
+0 clients and increase up to 10000 simultaneous clients by the end of the test.
+
+![Maintain client load](docs/maintain-load.png)
+
+
+
+
 
 ## Configuration Examples
 
