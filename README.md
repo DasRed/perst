@@ -7,6 +7,7 @@ perst is a wrapper around LoaderIO, which can be configured and run in your comm
 Usage: perst [options]
 
 Basic options:
+
 | Switch                  | Description                                                                               |
 | ----------------------- | ----------------------------------------------------------------------------------------- |
 | -c, --config FILENAME   | Use this config file (if argument is used but value is unspecified, defaults to .perstrc) |
