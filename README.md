@@ -2,6 +2,24 @@
 
 perst is a wrapper around LoaderIO, which can be configured and run in your commandline multiple tests and validates the measureable values like AVG Response Time and AVG Error Rate.
 
+## Table of Contents
+
+* [Command Line Options](#command-line-options)
+* [Configuration files](#configuration-files)
+* [Big list of configuration options](#big-list-of-configuration-options)
+	* [`version`](#version)
+	* [`api`](#api)
+		* [`api.token`](#apitoken)
+		* [`api.server`](#apiserver)
+		* [`api.version`](#apiversion)
+	* [`app`](#app)
+		* [`api.domain`](#apidomain)
+	* [`tasks`](#tasks)
+* [Configuration Examples](#configuration-examples)
+	* [YAML](#yaml)
+	* [JSON](#json)
+	* [JavaScript](#javascript)
+
 ## Command Line Options
 
 Usage: perst [options]
@@ -47,13 +65,72 @@ You can use environment variables in your configuration. Environment variables a
 
 ### `version`
 
-### Complete Example
+Defines the version of the configuration file.
 
-#### YAML
+- **Required:** false
+- **Type:** Number
+- **Values:** 1
+- **Default:** 1
+
+### `api`
+
+Defines some api information currently for [loader IO](https://dasred.github.io/loader.io). 
+
+- **Required:** true
+- **Type:** Object
+
+#### `api.token`
+
+Defines the [loader IO API](http://docs.loader.io/api/intro.html) token. 
+
+- **Required:** true
+- **Type:** String
+
+#### `api.server`
+
+Defines the [loader IO API](http://docs.loader.io/api/intro.html) server url. 
+
+- **Required:** false
+- **Type:** String
+- **Default:** https://api.loader.io
+
+#### `api.version`
+
+Defines the [loader IO API](http://docs.loader.io/api/intro.html) version. 
+
+- **Required:** false
+- **Type:** String
+- **Values:** v2
+- **Default:** v2
+
+### `app`
+
+Defines some application options. 
+
+- **Required:** true
+- **Type:** Object
+
+#### `api.domain`
+
+Defines the domain for load testing. The domain must be defined in [loader IO](https://loader.io/targets) and must be verified. 
+
+- **Required:** true
+- **Type:** String
+- **Example:** https://www.example.de
+
+### `tasks`
+
+Defines every task which should be run. This is an object of tasks. 
+
+- **Required:** true
+- **Type:** Object
+
+## Configuration Examples
+
+### YAML
 
 ```yaml
 version: 1
-dryRun:  false
 api:
     token:   bb74abe565ec005944ffcbfa846431e1
     server:  https://api.loader.io
@@ -111,12 +188,11 @@ tasks:
             -   path: /rofl/copoter
 ```
 
-#### JSON
+### JSON
 
 ```json
 {
     "version": 1,
-    "dryRun": false,
     "api": {
         "token": "bb74abe565ec005944ffcbfa846431e1",
         "server": "https://api.loader.io",
@@ -195,12 +271,11 @@ tasks:
 }
 ```
 
-#### JavaScript
+### JavaScript
 
 ```javascript
 export default {
     "version": 1,
-    "dryRun": false,
     "api": {
         "token": "bb74abe565ec005944ffcbfa846431e1",
         "server": "https://api.loader.io",

@@ -1,8 +1,6 @@
 # supports env variables
 version: 1 # is default
 
-dryRun: false # is default
-
 api:
     token: bb74abe565ec005944ffcbfa846431e1 # required
 #    server: https://api.loader.io # is default
