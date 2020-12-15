@@ -18,6 +18,7 @@
         "commit": "git-cz",
         "publish:check": "semantic-release --branch master --no-ci --dry-run",
         "prepublishOnly": "npm run test && npm run build && npm run semantic-release",
+        "toc": "toc-md --file README.md",
         "semantic-release": "semantic-release --no-ci",
         "test": "jest --coverage",
         "coveralls": "cat ./coverage/lcov.info | coveralls"
@@ -50,6 +51,7 @@
         "@commitlint/config-conventional": "^11.0.0",
         "@semantic-release/changelog": "^5.0.1",
         "@semantic-release/git": "^9.0.0",
+        "@toc/markdown": "^0.0.4",
         "babel-jest": "^26.6.3",
         "commitizen": "^4.2.2",
         "core-js": "^3.7.0",
@@ -69,6 +71,7 @@
     },
     "husky": {
         "hooks": {
+            "pre-commit": "npm run toc",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },

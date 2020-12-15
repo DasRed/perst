@@ -2,7 +2,7 @@
 
 perst is a wrapper around LoaderIO, which can be configured and run in your commandline multiple tests and validates the measureable values like AVG Response Time and AVG Error Rate.
 
-# Command Line Options
+## Command Line Options
 
 Usage: perst [options]
 
@@ -23,7 +23,7 @@ Basic options:
 | -s, --silent            | silent mode                                                                               |
 | --stop-on-failure       | stops the tasks execution, if a task fails                                                |
 
-# Configuration files
+## Configuration files
 
 At the following locations in the root directory and format can be placed the configuration.
 
@@ -41,15 +41,15 @@ The files will be searched in this order. The first match will be used.
 
 Or you run perst with the command line switch -c.
 
-# Big list of configuration options
+## Big list of configuration options
 
 You can use environment variables in your configuration. Environment variables are only supported in YAML Files. Every environment variable can be written in the format `$NAME` or `${NAME}`. Only existing environment variables will replaced.
 
-## `version`
+### `version`
 
-## Complete Example
+### Complete Example
 
-### YAML
+#### YAML
 
 ```yaml
 version: 1
@@ -111,7 +111,7 @@ tasks:
             -   path: /rofl/copoter
 ```
 
-### JSON
+#### JSON
 
 ```json
 {
@@ -195,7 +195,7 @@ tasks:
 }
 ```
 
-### JavaScript
+#### JavaScript
 
 ```javascript
 export default {
