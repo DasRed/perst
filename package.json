@@ -16,7 +16,7 @@
     "scripts": {
         "build": "rollup -c",
         "commit": "git-cz",
-        "publish:check": "semantic-release --branch master --no-ci --dry-run",
+        "publish:check": "semantic-release --no-ci --dry-run",
         "prepublishOnly": "npm run test && npm run build && npm run semantic-release",
         "toc": "toc-md --file README.md",
         "semantic-release": "semantic-release --no-ci",

@@ -277,7 +277,7 @@ This defines the maximum average error rate, which is allowed. If the test excee
 - **Required:** true
 - **Type:** Integer
 - **Values:** 0 <= x <= 100
-- **Default:** 50
+- **Default:** 0
 
 #### `tasks.[name].requests`
 
@@ -442,7 +442,7 @@ tasks:
             - tag 2
         threshold:
             avgResponseTime: 500
-            avgErrorRate:    50
+            avgErrorRate:    0
         request:
             path:        /nuff/narf
             type:        GET
@@ -505,7 +505,7 @@ tasks:
             ],
             "threshold": {
                 "avgResponseTime": 500,
-                "avgErrorRate": 50
+                "avgErrorRate": 0
             },
             "request": {
                 "path": "/nuff/narf",
