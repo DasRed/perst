@@ -102,8 +102,7 @@ describe('schema.js', () => {
             type:     'number',
             required: true,
             default:  1,
-            min:      1,
-            max:      1,
+            values:   [1],
             integer:  true,
         },
         api:      {
