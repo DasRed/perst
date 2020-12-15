@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/DasRed/perst/compare/v2.3.0...v2.3.1) (2020-12-15)
+
+
+### Bug Fixes
+
+* fixing default of threshold.avgErrorRate to 0 ([0e29254](https://github.com/DasRed/perst/commit/0e2925455289235354556ca02f8df769a14a5e41))
+
 # [2.3.0](https://github.com/DasRed/perst/compare/v2.2.1...v2.3.0) (2020-12-14)
 
 
