@@ -71,7 +71,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "npm run toc",
+            "pre-commit": "npm run toc && exit 1",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
