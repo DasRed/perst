@@ -19,14 +19,14 @@ export default async function createTasks(config) {
         throw new Error(`Domain ${config.app.domain} is not registered or not validated!`);
     }
 
-    let tasks = Object.entries(config.tasks);
+    let tasks = Object.values(config.tasks);
 
     // should be some task be filtered?
     if (config.filter) {
         const filter = new RegExp(config.filter);
-        tasks        = tasks.filter(([name, options]) => options.name.match(filter));
+        tasks        = tasks.filter((options) => options.name.match(filter));
     }
 
     // make it to tasks
-    return tasks.map(([name, options]) => new Task(loaderIO, name, options, config));
+    return tasks.map((options) => new Task(loaderIO, options.name, options, config));
 };

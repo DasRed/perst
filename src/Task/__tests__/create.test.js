@@ -28,8 +28,8 @@ describe('create.js', () => {
 
     beforeEach(() => {
         loaderIO          = undefined;
-        taskOptionsNuff   = {name: 'nuff'};
-        taskOptionsNarf   = {name: 'narf'};
+        taskOptionsNuff   = {name: 'rofl'};
+        taskOptionsNarf   = {name: 'copter'};
         config.filter     = undefined;
         config.tasks.nuff = taskOptionsNuff;
         config.tasks.narf = taskOptionsNarf;
@@ -37,7 +37,7 @@ describe('create.js', () => {
 
     describe('success', () => {
         test('with filter', async () => {
-            config.filter = 'ff$';
+            config.filter = 'fl$';
 
             const loggerLogSpy = jest.spyOn(logger, 'log').mockReturnThis();
 
@@ -47,7 +47,7 @@ describe('create.js', () => {
 
             expect(tasks).toHaveLength(1);
             expect(tasks[0]).toBeInstanceOf(Task);
-            expect(tasks[0].name).toBe('nuff');
+            expect(tasks[0].name).toBe('rofl');
 
             expect(loggerLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerLogSpy).toHaveBeenNthCalledWith(1, "Using domain \u001b[32mhttps://www.nuff.narf\u001b[39m");
@@ -64,9 +64,9 @@ describe('create.js', () => {
 
             expect(tasks).toHaveLength(2);
             expect(tasks[0]).toBeInstanceOf(Task);
-            expect(tasks[0].name).toBe('nuff');
+            expect(tasks[0].name).toBe('rofl');
             expect(tasks[1]).toBeInstanceOf(Task);
-            expect(tasks[1].name).toBe('narf');
+            expect(tasks[1].name).toBe('copter');
 
             expect(loggerLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerLogSpy).toHaveBeenNthCalledWith(1, "Using domain \u001b[32mhttps://www.nuff.narf\u001b[39m");
