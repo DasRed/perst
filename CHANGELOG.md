@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/DasRed/perst/compare/v2.3.1...v2.4.0) (2020-12-21)
+
+
+### Features
+
+* changing output name ([6304319](https://github.com/DasRed/perst/commit/63043193177606f575a5c4368ea34e4e48272326))
+
 ## [2.3.1](https://github.com/DasRed/perst/compare/v2.3.0...v2.3.1) (2020-12-15)
 
 
