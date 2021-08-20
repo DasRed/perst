@@ -76,7 +76,7 @@ describe('ResultFinder', () => {
         });
 
         test('with dryRun', () => {
-            jest.useFakeTimers();
+            jest.useFakeTimers('legacy');
             jest.clearAllTimers();
 
             const timeNow = (new Date()).getTime();
@@ -117,7 +117,7 @@ describe('ResultFinder', () => {
     });
 
     test('.waitForResult()', () => {
-        jest.useFakeTimers();
+        jest.useFakeTimers('legacy');
         jest.clearAllTimers();
 
         const resultA = new Result({result_id: 42});

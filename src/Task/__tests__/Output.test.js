@@ -28,7 +28,7 @@ describe('Output', () => {
 
     describe('.start()', () => {
         test('isCI = false', () => {
-            jest.useFakeTimers();
+            jest.useFakeTimers('legacy');
             jest.clearAllTimers();
 
             const timestampBefore = (new Date()).getTime();
@@ -53,7 +53,7 @@ describe('Output', () => {
         });
 
         test('isCI = true', () => {
-            jest.useFakeTimers();
+            jest.useFakeTimers('legacy');
             jest.clearAllTimers();
 
             const timestampBefore = (new Date()).getTime();
