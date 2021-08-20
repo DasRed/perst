@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/DasRed/perst/compare/v2.4.0...v2.4.1) (2021-08-20)
+
+
+### Bug Fixes
+
+* update dep and fixing tests ([aa7b1fa](https://github.com/DasRed/perst/commit/aa7b1fae17559582e9e8e0b2b896b2f72142c02f))
+
 # [2.4.0](https://github.com/DasRed/perst/compare/v2.3.1...v2.4.0) (2020-12-21)
 
 
