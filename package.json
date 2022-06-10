@@ -61,7 +61,7 @@
         "rollup": "^2.33.3",
         "rollup-plugin-clear": "^2.0.7",
         "rollup-plugin-copy": "^3.3.0",
-        "semantic-release": "^17.2.4"
+        "semantic-release": "^19.0.3"
     },
     "config": {
         "commitizen": {
